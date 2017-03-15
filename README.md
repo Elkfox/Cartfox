@@ -38,7 +38,7 @@ A number of jQuery events are triggered whenever certain events are compelted.
 If you have a cart popup that appears everytime a customer adds an item to the cart then we recommend having what we call an 'empty cart template' set up ready to go. This is done by adding the ``emptyTemplate`` option to the initialisation method. You will also need to include the 'container' for the items in your cart. .e.g. ``#AjaxCart .items``
 ~~~~
 //code above
-var cartfox = new Cartfox(cart, {
+var cartfox = new Cartfox.Cart(cart, {
    ...other Cartfox selectors...,
    emptyTemplate: '#AjaxCart .hidden-item-template',
    itemsContainer: '#AjaxCart .items'
@@ -56,7 +56,7 @@ Don't forget to add these selectors to your cartfox initialisation function.
 
 ~~~~
 //Code above cart initilisation
-var cartfox = new Cartfox(cart, { 
+var cartfox = new Cartfox.Cart(cart, { 
 ...other Cartfox selectors...,
 decreaseQuantity: '.decrease-qty',
 increaseQuantity: '.increase-qty',
@@ -105,8 +105,8 @@ Class representing the cart
 
 **Kind**: global class  
 
-* [Cartfox](#Cart)
-    * [new Cartfox(cart, selectors)](#new_Cart_new)
+* [Cart](#Cart)
+    * [new Cart(cart, selectors)](#new_Cart_new)
     * [.buildSelectors(selectors)](#Cart+buildSelectors)
     * [.getCart()](#Cart+getCart)
     * [.updateCart(cart)](#Cart+updateCart)
@@ -131,23 +131,15 @@ Build a new cart. Also creates a new queue.
 | cart | ``object`` | The json of the cart for the initial data. Can be set using liquid tags with the json filter. i.e. ``{{ cart | json }}`` |
 | selectors | ``object`` | The selectors to update information and for events to listen to. |
 
-<<<<<<< HEAD
 ### cart.buildSelectors(selectors)
 Build the event listeners and DOMElement selectors.
 
 **Kind**: instance method of [Cart](#Cart) 
-=======
-### cartfox.buildSelectors(selectors)
-Build the event listeners and DOMElement selectors.
-
-**Kind**: instance method of [Cartfox](#Cart) 
->>>>>>> 17e3d1d2784f9504ecbd6d9331cf3b8df9f10557
 
 | Param | Type | Description |
 | --- | --- | --- |
 | selectors | ``object`` | An object that includes all the selectors to use. |
 
-<<<<<<< HEAD
 ### cart.getCart()
 Get the cart
 
@@ -158,36 +150,16 @@ Update cart.
 Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed.
 
 **Kind**: instance method of [Cart](#Cart)  
-=======
-### cartfox.getCart()
-Get the cart
-
-**Kind**: instance method of [Cartfox](#Cart) 
-
-### cartfox.updateCart(cart)
-Update cart. 
-Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed.
-
-**Kind**: instance method of [Cartfox](#Cart)  
->>>>>>> 17e3d1d2784f9504ecbd6d9331cf3b8df9f10557
 
 | Param | Type | Description |
 | --- | --- | --- |
 | cart | ``object`` | Update the cart json in the object. Will also fire events that update the quantity etc. |
 
-<<<<<<< HEAD
 ### cart.addItem(id, quantity, properties)
 Add an item to the cart. Fired when the selector for addItem is fired.
 Fires a jQuery event cartfox:itemAdded.
 
 **Kind**: instance method of [Cart](#Cart)  
-=======
-### cartfox.addItem(id, quantity, properties)
-Add an item to the cart. Fired when the selector for addItem is fired.
-Fires a jQuery event cartfox:itemAdded.
-
-**Kind**: instance method of [Cartfox](#Cart)  
->>>>>>> 17e3d1d2784f9504ecbd6d9331cf3b8df9f10557
 
 | Param | Type | Description |
 | --- | --- | --- |
