@@ -1,21 +1,7 @@
 var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-  entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
-         ],
-  output: {
-    path: './dist',
-    filename: 'cartfox.min.js',
-    // filename: 'cartfox.js',
-    library: 'Cartfox'
-  },   
-   externals: {
-        // require("jquery") is external and available
-        //  on the global var jQuery
-        "jquery": "jQuery"
-    },
+var config = {
   module: {
     rules: [
       {
@@ -28,7 +14,44 @@ module.exports = {
         }
       }
     ]
-  },
+  }
+}
+
+var unCompressed = Object.assign({}, config, {
+entry: [ 'babel-polyfill', 
+          './src/cartfox.js'
+         ],
+  output: {
+    path: './dist',
+    filename: 'cartfox.js',
+    library: 'Cartfox'
+  },   
+   externals: {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "jquery": "jQuery"
+    },
+
+  plugins: [
+    new HtmlwebpackPlugin(),
+  ]
+})
+
+var minified = Object.assign({}, config, {
+entry: [ 'babel-polyfill', 
+          './src/cartfox.js'
+         ],
+  output: {
+    path: './dist',
+    filename: 'cartfox.min.js',
+    library: 'Cartfox'
+  },   
+   externals: {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "jquery": "jQuery"
+    },
+
   plugins: [
     new HtmlwebpackPlugin(),
     new UglifyJsPlugin({
@@ -38,4 +61,6 @@ module.exports = {
       comments: false
     })
   ]
-};
+})
+
+module.exports = [unCompressed, minified];

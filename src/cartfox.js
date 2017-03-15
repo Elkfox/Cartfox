@@ -53,16 +53,13 @@ export class Queue {
   process() {
     let params;
     if (!this.queue.length) {
-      console.log("Nothing in the queue");
       this.processing = false;
       jQuery(document).trigger('cartfox:requestComplete');
       return;
     }
     this.processing = true;
-    console.log(this.processing);
     params = this.queue.shift();
     params.success.push(this.process);
-    console.log("Processing: " + params.url);
     return jQuery.ajax(params);
   }
 }
@@ -115,12 +112,12 @@ export class Cart {
    * @param {object} selectors - An object that includes all the selectors to use.
    */
   buildSelectors(selectors) {
-    console.log("Building selectors");
-    console.log(jQuery(document).on("click", selectors.addItem, add.bind(this)));
-    console.log(jQuery(document).on("click", selectors.updateItem, { cart: this }, update));
-    console.log(jQuery(document).on("click", selectors.removeItem, { cart: this }, remove));
-    console.log(jQuery(document).on("click", selectors.decreaseQuantity, {cart: this}, decreaseQuantity));
-    console.log(jQuery(document).on("click", selectors.increaseQuantity, {cart: this}, increaseQuantity));
+
+    jQuery(document).on("click", selectors.addItem, add.bind(this));
+    jQuery(document).on("click", selectors.updateItem, { cart: this }, update);
+    jQuery(document).on("click", selectors.removeItem, { cart: this }, remove);
+    jQuery(document).on("click", selectors.decreaseQuantity, {cart: this}, decreaseQuantity);
+    jQuery(document).on("click", selectors.increaseQuantity, {cart: this}, increaseQuantity);
     /**
      * addItem - Event listener for when the additem event is triggered
      */
@@ -222,7 +219,6 @@ export class Cart {
     if (properties) {
       data.properties = properties;
     }
-    console.log("addItem has been called");
     this.queue.add('/cart/add.js', data, {});
 
     return this.getCart();

@@ -4,6 +4,7 @@
   "description": "An in progress ajax cart and queue for Shopify.",
   "main": "cartfox.js",
   "scripts": {
+    "prebuild": "del-cli dist -f",
     "build": "webpack",
     "server": "http-server ./dist",
     "start": "npm run build -s && npm run server -s"

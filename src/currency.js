@@ -40,7 +40,6 @@ var Currency = {
           value = formatWithDelimiters(cents, 0, '.', ',');
           break;
       }
-      console.log(formatString.replace(placeholderRegex, value))
       return formatString.replace(placeholderRegex, value);
   }
 }
