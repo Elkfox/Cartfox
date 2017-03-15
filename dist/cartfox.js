@@ -3548,7 +3548,7 @@ var Queue = function () {
         },
         success: [options.success],
         error: function error(_error) {
-          console.log(_error);
+          jQuery(document).trigger('cartfox:requestError', [_error]);
         },
         complete: [options.complete]
       };
@@ -3593,14 +3593,21 @@ var Queue = function () {
 var Cart = function () {
   /**
    * Build a new cart. Also creates a new queue.
+   * Default selectors are:
+   * cart: '.cart',
+   * cartItemCount: "#CartItemCount",
+   * cartTotal: ".cartTotal",
+   * decreaseQuantity: "#minusOne",
+   * increaseQuantity: "#plusOne",
+   * addItem: '.addItem',
+   * removeItem: '.removeItem',
+   * updateItem: '.updateItem'
    * @param {object} cart - The json of the cart for the initial data. Can be set using liquid tags with the json filter. {{ cart | json }} 
-   * @param {object} options - The options for the cart. Overrides defaults. Curently not in use.
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
   function Cart() {
     var cart = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var options = arguments[1];
-    var selectors = arguments[2];
+    var selectors = arguments[1];
     (0, _classCallCheck3.default)(this, Cart);
 
     var defaultOptions = {
@@ -3613,11 +3620,15 @@ var Cart = function () {
 
     this.selectors = (0, _assign2.default)({}, {
       cart: '.cart',
-      cartInventory: '.cartInventory',
-      cartTotal: '.cartTotal',
+      cartItemCount: "#CartItemCount",
+      cartTotal: ".cartTotal",
+      decreaseQuantity: "#minusOne",
+      increaseQuantity: "#plusOne",
       addItem: '.addItem',
       removeItem: '.removeItem',
-      updateItem: '.updateItem'
+      updateItem: '.updateItem',
+      emptyTemplate: '#PopupCart .items-hidden .item',
+      itemsContainer: '#PopupCart .items'
     }, selectors);
 
     //Non Data API keys
@@ -3718,10 +3729,10 @@ var Cart = function () {
     key: 'updateCart',
     value: function updateCart(cart) {
       this.cart = cart;
-      jQuery(this.selectors.item_count).text(this.cart.item_count);
-      jQuery(this.selectors.total_amount).text(concrete.Currency.formatMoney(this.cart.total_price));
-      var template = jQuery("#PopupCart .items-hidden .item").clone();
-      var master = jQuery("#PopupCart .items");
+      jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
+      jQuery(this.selectors.cartTotal).text(concrete.Currency.formatMoney(this.cart.total_price));
+      var template = jQuery(this.selectors.emptyTemplate).clone();
+      var master = jQuery(this.selectors.itemContainer);
       master.html('');
       var temp = [];
       this.cart.items.forEach(function (item) {

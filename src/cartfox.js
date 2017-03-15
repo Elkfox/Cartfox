@@ -34,7 +34,7 @@ class Queue {
           }
         },
         success: [options.success],
-        error: function(error) { console.log (error); },
+        error: function(error) { jQuery(document).trigger('cartfox:requestError', [error]); },
         complete: [options.complete]
     };
     // let request = {};
@@ -71,11 +71,19 @@ class Queue {
 class Cart {
   /**
    * Build a new cart. Also creates a new queue.
+   * Default selectors are:
+   * cart: '.cart',
+   * cartItemCount: "#CartItemCount",
+   * cartTotal: ".cartTotal",
+   * decreaseQuantity: "#minusOne",
+   * increaseQuantity: "#plusOne",
+   * addItem: '.addItem',
+   * removeItem: '.removeItem',
+   * updateItem: '.updateItem'
    * @param {object} cart - The json of the cart for the initial data. Can be set using liquid tags with the json filter. {{ cart | json }} 
-   * @param {object} options - The options for the cart. Overrides defaults. Curently not in use.
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
-  constructor(cart={}, options, selectors) {
+  constructor(cart={}, selectors) {
     let defaultOptions = {
       dataAPI: false,
     };
@@ -86,11 +94,15 @@ class Cart {
 
     this.selectors = Object.assign({}, {
       cart: '.cart',
-      cartInventory: '.cartInventory',
-      cartTotal: '.cartTotal',
+      cartItemCount: "#CartItemCount",
+      cartTotal: ".cartTotal",
+      decreaseQuantity: "#minusOne",
+      increaseQuantity: "#plusOne",
       addItem: '.addItem',
       removeItem: '.removeItem',
-      updateItem: '.updateItem'
+      updateItem: '.updateItem',
+      emptyTemplate: '#PopupCart .items-hidden .item',
+      itemsContainer: '#PopupCart .items',
     }, selectors);
 
     //Non Data API keys
@@ -181,10 +193,10 @@ class Cart {
    */
   updateCart(cart) {
     this.cart = cart;
-    jQuery(this.selectors.item_count).text(this.cart.item_count);
-    jQuery(this.selectors.total_amount).text(concrete.Currency.formatMoney(this.cart.total_price));
-    var template = jQuery("#PopupCart .items-hidden .item").clone();
-    var master = jQuery("#PopupCart .items");
+    jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
+    jQuery(this.selectors.cartTotal).text(concrete.Currency.formatMoney(this.cart.total_price));
+    var template = jQuery(this.selectors.emptyTemplate).clone();
+    var master = jQuery(this.selectors.itemContainer);
     master.html('');
     var temp = [];
     this.cart.items.forEach((item) => {

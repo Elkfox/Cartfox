@@ -6,7 +6,7 @@ module.exports = {
          ],
   output: {
     path: './dist',
-    filename: 'cartfox.js'
+    filename: 'cartfox.min.js'
   },
   module: {
     rules: [
