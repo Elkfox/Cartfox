@@ -84,10 +84,8 @@ export class Cart {
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
   constructor(cart={}, selectors) {
-    console.log("Cart initialised");
     this.queue = new Queue();
     this.cart = cart;
-    console.log(cart, selectors);
     this.selectors = Object.assign({}, {
       cart: '.cart',
       cartItemCount: "#CartItemCount",
@@ -109,6 +107,7 @@ export class Cart {
     this.updateCart = this.updateCart.bind(this); 
     this.buildSelectors = this.buildSelectors.bind(this);
 
+
     this.buildSelectors(this.selectors);
   }
   /**
@@ -126,7 +125,6 @@ export class Cart {
      * addItem - Event listener for when the additem event is triggered
      */
     function add(e) {
-      console.log("Clicked");
       e.preventDefault();
       let id = jQuery('select[name=id]').val();
       let quantity = Number(jQuery("input[name=quantity]").val());
@@ -273,13 +271,3 @@ export class Cart {
     this.queue.add('/cart/clear.js', {} , {});
   }
 }
-
-
-jQuery(document).ready(function() {
-  console.log("jQuery is working so why aren't your selectors?");
-  jQuery("form").on("submit", function(e) {
-    e.preventDefault();
-  });
-})
-
-

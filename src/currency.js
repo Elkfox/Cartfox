@@ -1,4 +1,3 @@
-
 var Currency = {
     formatMoney: function formatMoney(cents, format) {
       var moneyFormat = '${{amount}}'

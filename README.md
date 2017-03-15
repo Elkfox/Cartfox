@@ -131,15 +131,23 @@ Build a new cart. Also creates a new queue.
 | cart | ``object`` | The json of the cart for the initial data. Can be set using liquid tags with the json filter. i.e. ``{{ cart | json }}`` |
 | selectors | ``object`` | The selectors to update information and for events to listen to. |
 
+<<<<<<< HEAD
 ### cart.buildSelectors(selectors)
 Build the event listeners and DOMElement selectors.
 
 **Kind**: instance method of [Cart](#Cart) 
+=======
+### cartfox.buildSelectors(selectors)
+Build the event listeners and DOMElement selectors.
+
+**Kind**: instance method of [Cartfox](#Cart) 
+>>>>>>> 17e3d1d2784f9504ecbd6d9331cf3b8df9f10557
 
 | Param | Type | Description |
 | --- | --- | --- |
 | selectors | ``object`` | An object that includes all the selectors to use. |
 
+<<<<<<< HEAD
 ### cart.getCart()
 Get the cart
 
@@ -150,16 +158,36 @@ Update cart.
 Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed.
 
 **Kind**: instance method of [Cart](#Cart)  
+=======
+### cartfox.getCart()
+Get the cart
+
+**Kind**: instance method of [Cartfox](#Cart) 
+
+### cartfox.updateCart(cart)
+Update cart. 
+Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed.
+
+**Kind**: instance method of [Cartfox](#Cart)  
+>>>>>>> 17e3d1d2784f9504ecbd6d9331cf3b8df9f10557
 
 | Param | Type | Description |
 | --- | --- | --- |
 | cart | ``object`` | Update the cart json in the object. Will also fire events that update the quantity etc. |
 
+<<<<<<< HEAD
 ### cart.addItem(id, quantity, properties)
 Add an item to the cart. Fired when the selector for addItem is fired.
 Fires a jQuery event cartfox:itemAdded.
 
 **Kind**: instance method of [Cart](#Cart)  
+=======
+### cartfox.addItem(id, quantity, properties)
+Add an item to the cart. Fired when the selector for addItem is fired.
+Fires a jQuery event cartfox:itemAdded.
+
+**Kind**: instance method of [Cartfox](#Cart)  
+>>>>>>> 17e3d1d2784f9504ecbd6d9331cf3b8df9f10557
 
 | Param | Type | Description |
 | --- | --- | --- |

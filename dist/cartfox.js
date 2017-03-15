@@ -3616,10 +3616,8 @@ var Cart = exports.Cart = function () {
     var selectors = arguments[1];
     (0, _classCallCheck3.default)(this, Cart);
 
-    console.log("Cart initialised");
     this.queue = new Queue();
     this.cart = cart;
-    console.log(cart, selectors);
     this.selectors = (0, _assign2.default)({}, {
       cart: '.cart',
       cartItemCount: "#CartItemCount",
@@ -3664,7 +3662,6 @@ var Cart = exports.Cart = function () {
       function add(e) {
         var _this = this;
 
-        console.log("Clicked");
         e.preventDefault();
         var id = jQuery('select[name=id]').val();
         var quantity = Number(jQuery("input[name=quantity]").val());
@@ -3828,13 +3825,6 @@ var Cart = exports.Cart = function () {
   }]);
   return Cart;
 }();
-
-jQuery(document).ready(function () {
-  console.log("jQuery is working so why aren't your selectors?");
-  jQuery("form").on("submit", function (e) {
-    e.preventDefault();
-  });
-});
 
 /***/ }),
 /* 126 */
