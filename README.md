@@ -10,7 +10,7 @@ By [Elkfox](https://www.elkfox.com)
 Note: This is the bare minimum required to get Cartfox going.
 ~~~~
  var cart = {{ cart | json }}
- var cartfox = new Cart(cart, {
+ var cartfox = new Cartfox(cart, {
    cart: '.cart',
    cartItemCount: '.cartItemCount',
    cartTotal: '.cartTotal',
@@ -100,12 +100,12 @@ Process through the queue. Prevents synchonous callbacks.
 Fires a jQuery event 'cartfox:requestComplete'
 
 **Kind**: instance method of [Queue](#Queue)  
-## Cart
-Class representing a cart
+## Cartfox
+Class representing the cart
 
 **Kind**: global class  
 
-* [Cart](#Cart)
+* [Cartfox](#Cart)
     * [new Cart(cart, selectors)](#new_Cart_new)
     * [.buildSelectors(selectors)](#Cart+buildSelectors)
     * [.getCart()](#Cart+getCart)

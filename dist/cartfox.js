@@ -3506,6 +3506,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var concrete = window.concrete || {};
 concrete.Currency = __webpack_require__(127);
+console.log("Bundle loaded");
 
 /** Class representing a queue */
 
@@ -3531,7 +3532,7 @@ var Queue = function () {
 
 
   (0, _createClass3.default)(Queue, [{
-    key: 'add',
+    key: "add",
     value: function add(url, data, options) {
       var request = {
         url: url,
@@ -3567,7 +3568,7 @@ var Queue = function () {
      */
 
   }, {
-    key: 'process',
+    key: "process",
     value: function process() {
       var params = void 0;
       if (!this.queue.length) {
@@ -3590,7 +3591,7 @@ var Queue = function () {
 /** Class representing a cart */
 
 
-var Cart = function () {
+var Cartfox = function () {
   /**
    * Build a new cart. Also creates a new queue.
    * Default selectors are:
@@ -3605,17 +3606,12 @@ var Cart = function () {
    * @param {object} cart - The json of the cart for the initial data. Can be set using liquid tags with the json filter. {{ cart | json }} 
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
-  function Cart() {
+  function Cartfox() {
     var cart = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var selectors = arguments[1];
-    (0, _classCallCheck3.default)(this, Cart);
-
-    var defaultOptions = {
-      dataAPI: false
-    };
+    (0, _classCallCheck3.default)(this, Cartfox);
 
     this.queue = new Queue();
-    this.options = (0, _assign2.default)({}, defaultOptions, options);
     this.cart = cart;
 
     this.selectors = (0, _assign2.default)({}, {
@@ -3647,8 +3643,8 @@ var Cart = function () {
    */
 
 
-  (0, _createClass3.default)(Cart, [{
-    key: 'buildSelectors',
+  (0, _createClass3.default)(Cartfox, [{
+    key: "buildSelectors",
     value: function buildSelectors() {
       jQuery(document).on("click", this.selectors.addItem, add.bind(this));
       jQuery(document).on("click", this.selectors.removeItem, { cart: this }, remove);
@@ -3709,7 +3705,7 @@ var Cart = function () {
      */
 
   }, {
-    key: 'getCart',
+    key: "getCart",
     value: function getCart() {
       var options = {
         updateCart: true,
@@ -3726,7 +3722,7 @@ var Cart = function () {
      */
 
   }, {
-    key: 'updateCart',
+    key: "updateCart",
     value: function updateCart(cart) {
       this.cart = cart;
       jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
@@ -3755,7 +3751,7 @@ var Cart = function () {
      */
 
   }, {
-    key: 'addItem',
+    key: "addItem",
     value: function addItem(id, quantity, properties) {
       if (quantity < 1) {
         quantity = 1;
@@ -3772,17 +3768,17 @@ var Cart = function () {
       return this.getCart();
     }
   }, {
-    key: 'increaseQuantity',
+    key: "increaseQuantity",
     value: function increaseQuantity() {
       return true;
     }
   }, {
-    key: 'decreaseQuantity',
+    key: "decreaseQuantity",
     value: function decreaseQuantity() {
       return true;
     }
   }, {
-    key: 'removeItem',
+    key: "removeItem",
     value: function removeItem(line) {
       var data = {};
       data.line = line;
@@ -3791,7 +3787,7 @@ var Cart = function () {
       return this.getCart();
     }
   }, {
-    key: 'removeById',
+    key: "removeById",
     value: function removeById(id) {
       var data = { updates: {} };
       data.updates[id] = 0;
@@ -3802,10 +3798,10 @@ var Cart = function () {
     //Todo.
 
   }, {
-    key: 'updateItem',
+    key: "updateItem",
     value: function updateItem(line, quantity, properties) {}
   }, {
-    key: 'updateItemById',
+    key: "updateItemById",
     value: function updateItemById(id, quantity) {
       var data = { updates: {} };
       data.updates[id] = quantity;
@@ -3817,21 +3813,13 @@ var Cart = function () {
       //return this.getCart();
     }
   }, {
-    key: 'clear',
+    key: "clear",
     value: function clear() {
       this.queue.add('/cart/clear.js', {}, {});
     }
   }]);
-  return Cart;
+  return Cartfox;
 }();
-
-/**
- * jQuery events
- */
-
-/**
-
- */
 
 /***/ }),
 /* 126 */

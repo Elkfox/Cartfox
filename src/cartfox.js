@@ -1,5 +1,6 @@
 var concrete = window.concrete || {};
 concrete.Currency = require('./currency.js');
+console.log("Bundle loaded");
 
 /** Class representing a queue */
 class Queue {
@@ -68,7 +69,7 @@ class Queue {
 }
 
 /** Class representing a cart */
-class Cart {
+class Cartfox {
   /**
    * Build a new cart. Also creates a new queue.
    * Default selectors are:
@@ -84,12 +85,7 @@ class Cart {
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
   constructor(cart={}, selectors) {
-    let defaultOptions = {
-      dataAPI: false,
-    };
-
     this.queue = new Queue();
-    this.options = Object.assign({}, defaultOptions, options);
     this.cart = cart;
 
     this.selectors = Object.assign({}, {
@@ -277,11 +273,3 @@ class Cart {
   }
 }
 
-
-/**
- * jQuery events
- */
-
-/**
-
- */

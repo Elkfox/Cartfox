@@ -1,4 +1,5 @@
 var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+var HtmlwebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [ 'babel-polyfill', 
@@ -6,7 +7,7 @@ module.exports = {
          ],
   output: {
     path: './dist',
-    filename: 'cartfox.min.js'
+    filename: 'cartfox.js'
   },
   module: {
     rules: [
@@ -22,6 +23,12 @@ module.exports = {
     ]
   },
   plugins: [
+    new HtmlwebpackPlugin()
+  ]
+};
+
+/*
+  plugins: [
     new UglifyJsPlugin({
       beautify: false,
       mangle: { screw_ie8 : true },
@@ -29,4 +36,4 @@ module.exports = {
       comments: false
     })
   ]
-};
+*/
