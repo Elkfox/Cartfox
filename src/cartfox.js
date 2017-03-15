@@ -3,7 +3,7 @@ concrete.Currency = require('./currency.js');
 console.log("Bundle loaded");
 
 /** Class representing a queue */
-class Queue {
+export class Queue {
   /**
    * Build a queue.
    */
@@ -69,7 +69,7 @@ class Queue {
 }
 
 /** Class representing a cart */
-class Cartfox {
+export class Cartfox {
   /**
    * Build a new cart. Also creates a new queue.
    * Default selectors are:

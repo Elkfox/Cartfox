@@ -1,4 +1,4 @@
-var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+/*var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
     new HtmlwebpackPlugin()
   ]
 };
-
+*/
 /*
   plugins: [
     new UglifyJsPlugin({
