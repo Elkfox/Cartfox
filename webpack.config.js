@@ -35,7 +35,7 @@ entry: [ 'babel-polyfill',
   plugins: [
     new HtmlwebpackPlugin(),
   ]
-})
+});
 
 var minified = Object.assign({}, config, {
 entry: [ 'babel-polyfill', 
@@ -61,6 +61,41 @@ entry: [ 'babel-polyfill',
       comments: false
     })
   ]
-})
+});
 
-module.exports = [unCompressed, minified];
+var unCompressedjQuery = Object.assign({}, config, {
+entry: [ 'babel-polyfill', 
+          './src/cartfox.js'
+         ],
+  output: {
+    path: './dist',
+    filename: 'cartfox.jquery.js',
+    library: 'Cartfox'
+  },   
+
+  plugins: [
+    new HtmlwebpackPlugin(),
+  ]
+});
+
+var minifiedjQuery = Object.assign({}, config, {
+entry: [ 'babel-polyfill', 
+          './src/cartfox.js'
+         ],
+  output: {
+    path: './dist',
+    filename: 'cartfox.jquery.min.js',
+    library: 'Cartfox'
+  },   
+  plugins: [
+    new HtmlwebpackPlugin(),
+    new UglifyJsPlugin({
+      beautify: false,
+      mangle: { screw_ie8 : true },
+      compress: { screw_ie8: true, warnings: false },
+      comments: false
+    })
+  ]
+});
+
+module.exports = [unCompressed, minified, unCompressedjQuery, minifiedjQuery];
