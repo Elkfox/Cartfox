@@ -88,6 +88,12 @@ item-quantity: '.item-qty',
 });
 ~~~~
 
+## Quick Add Buttons.
+By adding a data attribute ``data-quick-add`` to a button and passing it an item id you add in the ability to add a product without having to submit a form.
+~~~~html
+<button class="quick-add" data-quick-add="1231">Add To Cart</button>
+~~~~
+By default the quantity that gets added to the cart is 1 but you can overwrite this by adding an extra data attribute ``data-quick-add-quantity`` and assigning it to the number of items you want added to the cart.
 
 Classes
 ==
