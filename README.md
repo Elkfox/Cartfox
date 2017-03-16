@@ -18,8 +18,23 @@ Note: This is the bare minimum required to get Cartfox going.
    removeItem: '.removeItem',
  });
 ~~~~
-
 3. That's it! Your cart should be ready to go
+
+### List of selectors
+#### Required Selectors
+* cart: The container for the ajax cart, if you have one.
+* cartItemCount: The selector that displays the total number of items in the cart
+* cartToal: The selector that displays the total value of the cart in $
+* addItem: The selector for the 'Add To Cart' button usually found on your product pages
+* removeItem: The selector for the 'Remove Item From Cart' button. 
+(N.B. This button must also have a data attribute ``data-item-id`` that is set to the value of the item id.)
+
+#### Optional Selectors
+* emptyTemplate: The selector for your 'item template' in your cart popup or cart. Explained in the next section.
+* itemsContainer: The selector for the container in your cart that holds all the items. Explained in the next section.
+* decreaseQuantity: The selector for your "Reduce Quantity" button 
+* increaseQuantity: The selector for your "Increase Quantity" button
+* itemQuantity: The selector that contains the item quantity. This selector must also have a data-item-id data attribute set to the items data id for the increase and decrease buttons to work.
 
 ## jQuery events
 A number of jQuery events are triggered whenever certain events are compelted.

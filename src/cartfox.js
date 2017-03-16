@@ -89,6 +89,7 @@ export class Cart {
       cartTotal: ".cartTotal",
       decreaseQuantity: "#minusOne",
       increaseQuantity: "#plusOne",
+      itemQuantity: '.item-qty',
       addItem: '.addItem',
       removeItem: '.removeItem',
       updateItem: '.updateItem',
@@ -118,6 +119,7 @@ export class Cart {
     jQuery(document).on("click", selectors.removeItem, { cart: this }, remove);
     jQuery(document).on("click", selectors.decreaseQuantity, {cart: this}, decreaseQuantity);
     jQuery(document).on("click", selectors.increaseQuantity, {cart: this}, increaseQuantity);
+    jQuery(document).on("click", "[data-quick-add]", {cart: this }, quickAdd);
     /**
      * addItem - Event listener for when the additem event is triggered
      */
@@ -140,24 +142,31 @@ export class Cart {
 
     function decreaseQuantity(e) {
       e.preventDefault();
-      var qty = Number(jQuery(this).next('.item-qty').text()) - 1;
-      var itemId = Number(jQuery(this).next('.item-qty').data('item-id'));
+      var qty = Number(jQuery(this).next(e.data.cart.selectors.itemQuantity).text()) - 1;
+      var itemId = Number(jQuery(this).next(e.data.cart.selectors.itemQuantity).data('item-id'));
       e.data.cart.updateItemById(itemId, qty);
       if (qty >= 1) {
-        jQuery(this).next('.item-qty').text(qty);
+        jQuery(this).next(e.data.cart.selectors.itemQuantity).text(qty);
       }
+    }
+
+    function quickAdd(e) {
+      e.preventDefault();
+      var itemId = Number(jQuery(this).data('quick-add'));
+      var qty = Number(jQuery(this).data('quick-add-qty')) || 1;
+      e.data.cart.addItem(itemId, qty);
     }
 
     function increaseQuantity(e) {
       e.preventDefault();
-      var qty = Number(jQuery(this).prev('.item-qty').text()) + 1;
-      var itemId = Number(jQuery(this).prev('.item-qty').data('item-id'));
+      var qty = Number(jQuery(this).prev(e.data.cart.selectors.itemQuantity).text()) + 1;
+      var itemId = Number(jQuery(this).prev(e.data.cart.selectors.itemQuantity).data('item-id'));
       e.data.cart.updateItemById(itemId, qty);
     }
 
     function remove(e) {
       e.preventDefault();
-      var itemId = Number(jQuery(this).siblings('.item-qty').data('item-id'));
+      var itemId = Number(jQuery(this).data('item-id'));
       e.data.cart.removeById(itemId);
     }
 
@@ -210,6 +219,7 @@ export class Cart {
    * @param {object} properties - The custom properties of the item.
    */
   addItem(id, quantity, properties) {
+    console.log(id, quantity);
     if (quantity < 1) {
       quantity = 1;
     }
