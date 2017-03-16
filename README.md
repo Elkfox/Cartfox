@@ -8,7 +8,7 @@ By [Elkfox](https://www.elkfox.com)
 
 
 ## Installation
----
+
 Download the minified or uncompressed source files from the dist folder and add them to your themes asset folder.
 
 If you don't have jQuery included inside your theme then we recommend using the cartfox.jquery.js or cartfox.jquery.min.js files. 
@@ -17,7 +17,6 @@ These include the jQuery libray for internal use so you don't have to.
 Include the script in the head of your ``theme.liquid`` file using ``{% 'cartfox.js' | asset_url | script_tag %}``
 
 ## Initialization
----
 Note: This is the bare minimum required to get Cartfox going.
 ~~~~js
  var cart = {{ cart | json }}
@@ -47,7 +46,6 @@ Note: This is the bare minimum required to get Cartfox going.
 * itemQuantity: The selector that contains the item quantity. This selector must also have a data-item-id data attribute set to the items data id for the increase and decrease buttons to work.
 
 ## jQuery events
----
 A number of jQuery events are triggered whenever certain events are compelted.
 
 | Event | Returns | Description |
@@ -61,7 +59,6 @@ A number of jQuery events are triggered whenever certain events are compelted.
 
 
 ## Adding an empty template popup.
----
 If you have a cart popup that appears everytime a customer adds an item to the cart then we recommend having what we call an 'empty cart template' set up ready to go. This is done by adding the ``emptyTemplate`` option to the initialisation method. You will also need to include the 'container' for the items in your cart. .e.g. ``#AjaxCart .items``
 ~~~~js
 //code above
@@ -74,7 +71,6 @@ var cartfox = new Cartfox.Cart(cart, {
 Now when``updateCart(cart)`` is called (By design whenever ``getCart()`` is called) Cartfox will select the empty template and copy it for each item it needs to add to the cart. If these are not set then 
 
 ## Ajax Cart quantity update.
----
 If you'd like to have **+** or **-** buttons on either side of your item quantities in your ajax cart then you can include them on either side of your quantity span, paragaph, div, etc. Including the item id inside a data attribute on the quantity makes it easier for the **+** and **-** items to find the item id that they need to update the quantity for. 
 ~~~~html
 <span class="decrease-qty">-</span><span class="item-qty" data-item-id="123121">12</span><span class="increase-qty">
@@ -96,7 +92,6 @@ item-quantity: '.item-qty',
 Classes
 ==
 ## Queue
----
 Class representing a queue
 
 **Kind**: global class  
@@ -127,8 +122,10 @@ Process through the queue. Prevents synchonous callbacks.
 Fires a jQuery event 'cartfox:requestComplete'
 
 **Kind**: instance method of [Queue](#Queue)  
-## Cartfox
+
 ---
+
+## Cartfox
 Class representing the cart
 
 **Kind**: global class  
