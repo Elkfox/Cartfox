@@ -49,9 +49,9 @@ Locate your submit button towards the bottom of your form.
 
 It should look what is shown below.
 ```html
-    <button type="submit" name="add" id="AddToCart">
-      <span id="AddToCartText">{{ 'product.add_to_cart' | t }}</span>
-    </button>
+<button type="submit" name="add" id="AddToCart">
+  <span id="AddToCartText">{{ 'product.add_to_cart' | t }}</span>
+</button>
 ```
 
 Make sure it has the same selector as your list of selectors when you initialised Cartfox. In our case our selector was `#AddToCart` and we can see that the button has an attribute `id="AddToCart` so we're good to go.
