@@ -1,6 +1,7 @@
 var concrete = window.concrete || {};
 var Currency = require('./currency.js');
 var jQuery = require('jquery');
+
 /** Class representing a queue */
 export class Queue {
   /**
@@ -175,6 +176,16 @@ export class Cart {
     }
 
   }
+
+  wrapKeys(obj, type='properties', defaultValue=null) {
+    let wrapped = {};
+    for (var key in obj) {
+      var value = key;
+      wrapped[`${ type }[${ key }]`] = defaultValue === null ? value : defaultValue;
+    }
+    return wrapped;
+  }
+
   /**
    * Get the cart
    */
@@ -192,23 +203,25 @@ export class Cart {
    * Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed. 
    * @param {object} cart - Update the cart json in the object. Will also fire events that update the quantity etc.
    */
-  updateCart(cart) {
+  updateCart(cart, updateCart=true) {
     this.cart = cart;
     jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
     jQuery(this.selectors.cartTotal).text(Currency.formatMoney(this.cart.total_price));
-    var template = jQuery(this.selectors.emptyTemplate).clone();
-    var master = jQuery(this.selectors.itemContainer);
-    master.html('');
-    var temp = [];
-    this.cart.items.forEach((item) => {
-      var temp = template.clone();
-      temp.appendTo(master);
-      temp.find('.item-title').text(item.title);
-      temp.find('.item-price').text(Currency.formatMoney(item.line_price));
-      temp.find('.item-qty').text(item.quantity);
-      temp.find('[data-item-id]').attr('data-item-id', item.id);
-      temp.appendTo(master);
-    });
+    if (updateCart) { //This will update any cart html if unless updateCart=false
+      var template = jQuery(this.selectors.emptyTemplate).clone();
+      var master = jQuery(this.selectors.itemContainer);
+      master.html('');
+      var temp = [];
+      this.cart.items.forEach((item) => {
+        var temp = template.clone();
+        temp.appendTo(master);
+        temp.find('.item-title').text(item.title);
+        temp.find('.item-price').text(Currency.formatMoney(item.line_price));
+        temp.find('.item-qty').text(item.quantity);
+        temp.find('[data-item-id]').attr('data-item-id', item.id);
+        temp.appendTo(master);
+      });
+    }
     jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
   }
   /**
@@ -218,8 +231,7 @@ export class Cart {
    * @param {number} quantity - The quantity of the variant you want to add to the cart. Defaults to 1 if set to less than 1.
    * @param {object} properties - The custom properties of the item.
    */
-  addItem(id, quantity, properties) {
-    console.log(id, quantity);
+  addItem(id, quantity=1, properties) {
     if (quantity < 1) {
       quantity = 1;
     }
@@ -227,7 +239,7 @@ export class Cart {
     data.id = id;
     data.quantity = quantity;
     if (properties) {
-      data.properties = properties;
+      data.properties = this.wrapKeys(properties);
     }
     this.queue.add('/cart/add.js', data, {});
 
@@ -257,11 +269,6 @@ export class Cart {
     return this.getCart();
   }
 
-  //Todo.
-  updateItem(line, quantity, properties) {
-
-  }
-
   updateItemById(id, quantity) {
     let data = {updates: {}};
     data.updates[id] = quantity;
@@ -273,7 +280,56 @@ export class Cart {
     //return this.getCart();
   }
 
+  updateItemsById(items, options={}) {
+    var data = {
+      updates: items
+    };
+    if (items) {
+      this.queue.add('/cart/update.js', data, options);
+    }
+  }
+
+  /**
+   * Set a cart attribute
+   * @param {string} name 
+   * @param {string} value 
+   * @param {object} options 
+   * @returns Nothing
+   */
+  setAttribute(name, value, options = {}) {
+    var attribute = {};
+    attribute[name] = value;
+    this.setAttributes(attribute, options);
+  }
+
+  /**
+   * Set multiple cart attributes by passing them in an object.
+   * @param {object} attributes 
+   * @param {object} options 
+   */
+  setAttributes(attributes={}, options={}) {
+    if (attributes !== {}) {
+      var attributes = this.wrapKeys(attributes, 'attributes');
+      this.queue.add('/cart/update.js', attributes, options);
+    }
+    return;
+  }
+
+  getAttribute(attribute, defaultValue=false) {
+    return this.cart.attributes.hasOwnProperty(attribute) ? this.cart.attributes[attribute] : defaultValue;
+  }
+
+  getAttributes() {
+    return this.cart.attributes;
+  }
+
+  clearAttributes() {
+    this.queue.add('/cart/update.js', this.wrapKeys(this.getAttributes(), 'attributes', ''));
+  }
+
   clear() {
     this.queue.add('/cart/clear.js', {} , {});
   }
+
+
 }
