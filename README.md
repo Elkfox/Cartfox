@@ -1,6 +1,6 @@
 🛒🦊 (Cartfox)
 ==
-A super simple implementation of the [Shopify](https://www.shopify.com) ajax cart API.
+A super simple wrapper for the [Shopify](https://www.shopify.com) ajax cart API.
 
 Light weight and easy to setup.
 

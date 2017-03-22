@@ -3633,7 +3633,6 @@ var Cart = function () {
     //Non Data API keys
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
-    this.updateItem = this.updateItem.bind(this);
     this.updateItemById = this.updateItemById.bind(this);
     this.updateCart = this.updateCart.bind(this);
     this.buildSelectors = this.buildSelectors.bind(this);
@@ -3720,7 +3719,7 @@ var Cart = function () {
 
       var wrapped = {};
       for (var key in obj) {
-        var value = key;
+        var value = obj[key];
         wrapped[type + '[' + key + ']'] = defaultValue === null ? value : defaultValue;
       }
       return wrapped;
@@ -3750,7 +3749,7 @@ var Cart = function () {
   }, {
     key: 'updateCart',
     value: function updateCart(cart) {
-      var _updateCart = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var _updateCart = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
       this.cart = cart;
       jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
@@ -3837,7 +3836,7 @@ var Cart = function () {
         success: [this.updateCart]
       };
       this.queue.add('/cart/update.js', data, options);
-      //return this.getCart();
+      return this.getCart();
     }
   }, {
     key: 'updateItemsById',
@@ -3850,6 +3849,7 @@ var Cart = function () {
       if (items) {
         this.queue.add('/cart/update.js', data, options);
       }
+      return this.getCart();
     }
 
     /**
@@ -3867,7 +3867,7 @@ var Cart = function () {
 
       var attribute = {};
       attribute[name] = value;
-      this.setAttributes(attribute, options);
+      return this.setAttributes(attribute, options);
     }
 
     /**
@@ -3886,7 +3886,7 @@ var Cart = function () {
         var attributes = this.wrapKeys(attributes, 'attributes');
         this.queue.add('/cart/update.js', attributes, options);
       }
-      return;
+      return this.getCart();
     }
   }, {
     key: 'getAttribute',
@@ -3904,11 +3904,13 @@ var Cart = function () {
     key: 'clearAttributes',
     value: function clearAttributes() {
       this.queue.add('/cart/update.js', this.wrapKeys(this.getAttributes(), 'attributes', ''));
+      return this.getCart();
     }
   }, {
     key: 'clear',
     value: function clear() {
       this.queue.add('/cart/clear.js', {}, {});
+      return this.getCart();
     }
   }]);
   return Cart;

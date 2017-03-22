@@ -33,6 +33,7 @@ Installation
       });
 </script>
 ```
+
 This sets up all the initial code you need to run Cartfox. The only required argument for the `Cartfox()` class is the json for the current cart, it doesn't necessarily have to have any items in it this just tells Cartfox if you have any cart attributes or notes set up by default. The other argument is an Object which contains a list of the selectors we'll use. You can find more info about this [here](https://www.github.io/Elkfox/cartfox/README.md)
 
 ### product.liquid
@@ -56,7 +57,58 @@ It should look what is shown below.
 
 Make sure it has the same selector as your list of selectors when you initialised Cartfox. In our case our selector was `#AddToCart` and we can see that the button has an attribute `id="AddToCart` so we're good to go.
 
+### Popup Cart
+If you have a cart popup that appears when a customer adds something to cart then adapting this for Cartfox is simple.
 
+The best bit about this is that you can leave the current cart popup entact except for a few small changes.
+```html
+<div id="PopupCart" class="popup overlay">
+  <div class="popup-inner">
+    <div class="popup-outside"></div>
+    <div class="popup-content left">
+      <div class="h4">{{ 'cart.title' | t }}</div>
+      <div class="items">
+        {% for item in cart.items %}
+          <div class="item">
+            <p>
+              <a class="item-title">{{ item.title }}</a>
+            </p>
+            <div class="row cart-item">
+              <div class="column l6 m6 s6">
+                <strong class="item-price">{{ item.line_price | money_with_currency }}</strong>
+                <a href="#" class="remove-item" data-item-id="{{item.id}}">Remove</a>
+              </div>
+              <div class="column l6 m6 s6 right">
+                <div class="quanity_adjust">
+                  <a class="adjust minusOne">&#8722;</a>
+                  <span class="quantity item-qty" data-item-id="{{item.id}}">{{ item.quantity }}</span>
+                  <a class="adjust plusOne">&#43;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <hr>
+      <p><small>{{ 'cart.shipping_at_checkout' | t }}</small></p>
+      <div class="row cart-item">
+        <div class="column l6 m6 s6">
+          <a href="/cart" aria-label="{{ 'cart.view_cart' | t }}">{{ 'cart.view_cart' | t }}</a>
+        </div>
+        <div class="column l6 m6 s6 right">
+          <strong>{{ 'cart.total' | t }} <span id="CartTotal" class="cart-total">{{ cart.total_price | money_with_currency }}</span></strong>
+        </div>
+      </div>
+      <p class="center"><a href="/cart" class="button wide" aria-label="{{ 'cart.checkout' | t }}">{{ 'cart.checkout' | t }}</a></p>
+      <a href="#close" class="popup-close" aria-label="{{ 'common.close' | t }}">{{ 'common.close' | t }}</a>
+    </div>
+  </div>
+</div>
+```
+The code above is the basic popup cart included in Concrete. At the moment it is basic and only allows us to update the quantity of an item or remove it.
 
+#### Item Quantity Updates
+If you look at the code above for `<div class="quantity_adjust">` and look at the code inside that container you'll notice we have two `a` tags and `span` tag. 
+You'll notice that the `a` tags have classes `minusOne` and `plusOne` respectively. This tells Cartfox to listen for presses on that button and then look for the closest span that has a `data-item-id` tag and `.item-qty` class. 
 
 

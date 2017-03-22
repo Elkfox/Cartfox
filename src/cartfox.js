@@ -101,7 +101,6 @@ export class Cart {
     //Non Data API keys
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
-    this.updateItem = this.updateItem.bind(this);
     this.updateItemById = this.updateItemById.bind(this);
     this.updateCart = this.updateCart.bind(this); 
     this.buildSelectors = this.buildSelectors.bind(this);
@@ -180,7 +179,7 @@ export class Cart {
   wrapKeys(obj, type='properties', defaultValue=null) {
     let wrapped = {};
     for (var key in obj) {
-      var value = key;
+      var value = obj[key];
       wrapped[`${ type }[${ key }]`] = defaultValue === null ? value : defaultValue;
     }
     return wrapped;
@@ -203,7 +202,7 @@ export class Cart {
    * Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed. 
    * @param {object} cart - Update the cart json in the object. Will also fire events that update the quantity etc.
    */
-  updateCart(cart, updateCart=true) {
+  updateCart(cart, updateCart=false) {
     this.cart = cart;
     jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
     jQuery(this.selectors.cartTotal).text(Currency.formatMoney(this.cart.total_price));
@@ -277,7 +276,7 @@ export class Cart {
       success: [this.updateCart],
     };
     this.queue.add('/cart/update.js', data, options);
-    //return this.getCart();
+    return this.getCart();
   }
 
   updateItemsById(items, options={}) {
@@ -287,6 +286,7 @@ export class Cart {
     if (items) {
       this.queue.add('/cart/update.js', data, options);
     }
+    return this.getCart();
   }
 
   /**
@@ -299,7 +299,7 @@ export class Cart {
   setAttribute(name, value, options = {}) {
     var attribute = {};
     attribute[name] = value;
-    this.setAttributes(attribute, options);
+    return this.setAttributes(attribute, options);
   }
 
   /**
@@ -312,7 +312,7 @@ export class Cart {
       var attributes = this.wrapKeys(attributes, 'attributes');
       this.queue.add('/cart/update.js', attributes, options);
     }
-    return;
+    return this.getCart();
   }
 
   getAttribute(attribute, defaultValue=false) {
@@ -325,10 +325,12 @@ export class Cart {
 
   clearAttributes() {
     this.queue.add('/cart/update.js', this.wrapKeys(this.getAttributes(), 'attributes', ''));
+    return this.getCart();
   }
 
   clear() {
     this.queue.add('/cart/clear.js', {} , {});
+    return this.getCart();
   }
 
 
