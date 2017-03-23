@@ -58,9 +58,9 @@ It should look what is shown below.
 Make sure it has the same selector as your list of selectors when you initialised Cartfox. In our case our selector was `#AddToCart` and we can see that the button has an attribute `id="AddToCart` so we're good to go.
 
 ### Popup Cart
-If you have a cart popup that appears when a customer adds something to cart then adapting this for Cartfox is simple.
+If you have a cart popup that appears when a customer adds something to cart then adapting this for Cartfox is simple. While other ajax cart interfaces use templating languages or two-way data binding we think our method is much easier to use and implement.
 
-The best bit about this is that you can leave the current cart popup entact except for a few small changes.
+#### popup-cart.liquid
 ```html
 <div id="PopupCart" class="popup overlay">
   <div class="popup-inner">
@@ -108,7 +108,7 @@ The best bit about this is that you can leave the current cart popup entact exce
 The code above is the basic popup cart included in Concrete. At the moment it is basic and only allows us to update the quantity of an item or remove it.
 
 #### Item Quantity Updates
-If you look at the code above for `<div class="quantity_adjust">` and look at the code inside that container you'll notice we have two `a` tags and `span` tag. 
+If you look inside the `<div class="quantity_adjust">` container you'll notice we have two `a` tags and a `span` tag. 
 You'll notice that the `a` tags have classes `minusOne` and `plusOne` respectively. This tells Cartfox to listen for presses on that button and then look for the closest span that has a `data-item-id` tag and `.item-qty` class. 
 
 

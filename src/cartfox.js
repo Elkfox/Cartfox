@@ -1,7 +1,6 @@
-var concrete = window.concrete || {};
-var Currency = require('./currency.js');
-var jQuery = require('jquery');
-
+const Currency = require('./currency.js');
+const Images = require('./images.js');
+const jQuery = require('jquery');
 /** Class representing a queue */
 export class Queue {
   /**
@@ -17,34 +16,37 @@ export class Queue {
    * Add a request to the queue.
    * Fires a jQuery event 'cartfox:requestStarted'
    * @param {string} url - Url to make the request to (i.e. '/cart.js')
-   * @param {object} data - Data to send to the url (i.e. {id: 123453, quantity: 1, properties: {} })
-   * @param {object} options - Options for the request. Can include method, success and error functions.
+   * @param {object} data - Data to send to the url
+   * (i.e. {id: 123453, quantity: 1, properties: {} })
+   * @param {object} options - Options for the request.
+   * Can include method, success and error functions.
+   * @returns this.process() - begins processing the queue.
    */
   add(url, data, options) {
-    let request = {
-        url: url,
-        data: data,
-        type: options.type || "POST",
-        dataType: 'json',
-        statusCode: {
-          422: function(err) {
-            /**
-             * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
-             */
-            jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-          }
-        },
-        success: [options.success],
-        error: function(error) { jQuery(document).trigger('cartfox:requestError', [error]); },
-        complete: [options.complete]
+    const request = {
+      url: url,
+      data: data,
+      type: options.type || 'POST',
+      dataType: 'json',
+      statusCode: {
+        422: (err) => {
+          /**
+           * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
+           */
+          jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
+        }
+      },
+      success: [options.success],
+      error: (error) => { jQuery(document).trigger('cartfox:requestError', [error]); },
+      complete: [options.complete],
     };
     // let request = {};
     this.queue.push(request);
     if (this.processing) {
-        return;
+      return;
     }
     jQuery(document).trigger('cartfox:requestStarted');
-    return this.process();
+    this.process();
   }
 
   /**
@@ -52,16 +54,15 @@ export class Queue {
    * Fires a jQuery event 'cartfox:requestComplete'
    */
   process() {
-    let params;
     if (!this.queue.length) {
       this.processing = false;
       jQuery(document).trigger('cartfox:requestComplete');
       return;
     }
     this.processing = true;
-    params = this.queue.shift();
+    const params = this.queue.shift();
     params.success.push(this.process);
-    return jQuery.ajax(params);
+    jQuery.ajax(params);
   }
 }
 
@@ -78,18 +79,19 @@ export class Cart {
    * addItem: '.addItem',
    * removeItem: '.removeItem',
    * updateItem: '.updateItem'
-   * @param {object} cart - The json of the cart for the initial data. Can be set using liquid tags with the json filter. {{ cart | json }} 
+   * @param {object} cart - The json of the cart for the initial data. Can be set using liquid tags
+   * with the json filter. {{ cart | json }}
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
-  constructor(cart={}, selectors) {
+  constructor(cart = {}, selectors) {
     this.queue = new Queue();
     this.cart = cart;
     this.selectors = Object.assign({}, {
       cart: '.cart',
-      cartItemCount: "#CartItemCount",
-      cartTotal: ".cartTotal",
-      decreaseQuantity: "#minusOne",
-      increaseQuantity: "#plusOne",
+      cartItemCount: '#CartItemCount',
+      cartTotal: '.cartTotal',
+      decreaseQuantity: '#minusOne',
+      increaseQuantity: '#plusOne',
       itemQuantity: '.item-qty',
       addItem: '.addItem',
       removeItem: '.removeItem',
@@ -98,7 +100,7 @@ export class Cart {
       itemsContainer: '#PopupCart .items',
     }, selectors);
 
-    //Non Data API keys
+    //  Non Data API keys
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.updateItemById = this.updateItemById.bind(this);
@@ -113,13 +115,6 @@ export class Cart {
    * @param {object} selectors - An object that includes all the selectors to use.
    */
   buildSelectors(selectors) {
-
-    jQuery(document).on("click", selectors.addItem, add.bind(this));
-    jQuery(document).on("click", selectors.updateItem, { cart: this }, update);
-    jQuery(document).on("click", selectors.removeItem, { cart: this }, remove);
-    jQuery(document).on("click", selectors.decreaseQuantity, {cart: this}, decreaseQuantity);
-    jQuery(document).on("click", selectors.increaseQuantity, {cart: this}, increaseQuantity);
-    jQuery(document).on("click", "[data-quick-add]", {cart: this }, quickAdd);
     /**
      * addItem - Event listener for when the additem event is triggered
      */
@@ -173,15 +168,22 @@ export class Cart {
     function update(e) {
       e.preventDefault();
     }
-
+    jQuery(document).on('click', selectors.addItem, add.bind(this));
+    jQuery(document).on('click', selectors.updateItem, { cart: this }, update);
+    jQuery(document).on('click', selectors.removeItem, { cart: this }, remove);
+    jQuery(document).on('click', selectors.decreaseQuantity, { cart: this }, decreaseQuantity);
+    jQuery(document).on('click', selectors.increaseQuantity, { cart: this }, increaseQuantity);
+    jQuery(document).on('click', '[data-quick-add]', { cart: this }, quickAdd);
   }
 
-  wrapKeys(obj, type='properties', defaultValue=null) {
-    let wrapped = {};
-    for (var key in obj) {
-      var value = obj[key];
-      wrapped[`${ type }[${ key }]`] = defaultValue === null ? value : defaultValue;
-    }
+  static wrapKeys(obj, type = 'properties', defaultValue = null) {
+    const wrapped = {};
+    Object.keys(obj).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        const value = obj[key];
+        wrapped[`${type}[${key}]`] = defaultValue === null ? value : defaultValue;
+      }
+    });
     return wrapped;
   }
 
@@ -189,7 +191,7 @@ export class Cart {
    * Get the cart
    */
   getCart() {
-    var options = {
+    const options = {
       updateCart: true,
       success: this.updateCart,
       type: 'GET',
@@ -199,10 +201,11 @@ export class Cart {
 
   /**
    * Update cart. 
-   * Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed. 
-   * @param {object} cart - Update the cart json in the object. Will also fire events that update the quantity etc.
+   * Fires jQuery event 'cartfox:cartUpdated' and passes the cart to the event when it has completed
+   * @param {object} cart - Update the cart json in the object. Will also fire events that update
+   * the quantity etc.
    */
-  updateCart(cart, updateCart=false) {
+  updateCart(cart, updateCart = true) {
     this.cart = cart;
     jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
     jQuery(this.selectors.cartTotal).text(Currency.formatMoney(this.cart.total_price));
@@ -213,8 +216,10 @@ export class Cart {
       var temp = [];
       this.cart.items.forEach((item) => {
         var temp = template.clone();
-        temp.appendTo(master);
+        var image_size = temp.find('.item-image').data('image-size') || 'small';
+        var image_url = Images.getImageUrl(item.image, image_size);
         temp.find('.item-title').text(item.title);
+        temp.find('.item-image').attr('src', image_url);
         temp.find('.item-price').text(Currency.formatMoney(item.line_price));
         temp.find('.item-qty').text(item.quantity);
         temp.find('[data-item-id]').attr('data-item-id', item.id);
@@ -230,7 +235,7 @@ export class Cart {
    * @param {number} quantity - The quantity of the variant you want to add to the cart. Defaults to 1 if set to less than 1.
    * @param {object} properties - The custom properties of the item.
    */
-  addItem(id, quantity=1, properties) {
+  addItem(id, quantity=1, properties={}) {
     if (quantity < 1) {
       quantity = 1;
     }
@@ -283,7 +288,7 @@ export class Cart {
     var data = {
       updates: items
     };
-    if (items) {
+    if (items.length > 0) {
       this.queue.add('/cart/update.js', data, options);
     }
     return this.getCart();

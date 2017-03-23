@@ -95,6 +95,10 @@ By adding a data attribute ``data-quick-add`` to a button and passing it an item
 ~~~~
 By default the quantity that gets added to the cart is 1 but you can overwrite this by adding an extra data attribute ``data-quick-add-quantity`` and assigning it to the number of items you want added to the cart.
 
+
+
+
+
 Classes
 ==
 ## Queue
