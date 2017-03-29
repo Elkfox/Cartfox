@@ -10,26 +10,29 @@ var config = {
         exclude: /node_modules/,
         options: {
           plugins: ['transform-runtime'],
-          presets: ['es2015']
-        }
-      }
-    ]
-  }
-}
+          presets: ['es2015'],
+        },
+      },
+    ],
+  },
+  resolve: {
+    alias: {
+      handlebars: 'handlebars/dist/handlebars.min.js',
+    },
+  },
+};
 
 var unCompressed = Object.assign({}, config, {
-entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
-         ],
+entry: ['./src/cartfox.js'],
   output: {
     path: './dist',
     filename: 'cartfox.js',
-    library: 'Cartfox'
+    library: 'Cartfox',
   },   
    externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
-        "jquery": "jQuery"
+        "jquery": "jQuery",
     },
 
   plugins: [
@@ -38,19 +41,17 @@ entry: [ 'babel-polyfill',
 });
 
 var minified = Object.assign({}, config, {
-entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
-         ],
+entry: ['./src/cartfox.js'],
   output: {
     path: './dist',
     filename: 'cartfox.min.js',
-    library: 'Cartfox'
-  },   
-   externals: {
-        // require("jquery") is external and available
-        //  on the global var jQuery
-        "jquery": "jQuery"
-    },
+    library: 'Cartfox',
+  },
+  externals: {
+    // require("jquery") is external and available
+    //  on the global var jQuery
+    jquery: 'jQuery',
+  },
 
   plugins: [
     new HtmlwebpackPlugin(),
