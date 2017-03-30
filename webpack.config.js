@@ -18,8 +18,7 @@ var config = {
 }
 
 var unCompressed = Object.assign({}, config, {
-entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
+entry: [ './src/cartfox.js'
          ],
   output: {
     path: './dist',
@@ -38,8 +37,7 @@ entry: [ 'babel-polyfill',
 });
 
 var minified = Object.assign({}, config, {
-entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
+entry: [ './src/cartfox.js'
          ],
   output: {
     path: './dist',

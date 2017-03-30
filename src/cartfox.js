@@ -24,8 +24,8 @@ export class Queue {
    */
   add(url, data, options) {
     const request = {
-      url: url,
-      data: data,
+      url,
+      data,
       type: options.type || 'POST',
       dataType: 'json',
       statusCode: {
@@ -33,8 +33,9 @@ export class Queue {
           /**
            * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
            */
+          console.log(err);
           jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-        }
+        },
       },
       success: [options.success],
       error: (error) => { jQuery(document).trigger('cartfox:requestError', [error]); },
@@ -104,7 +105,7 @@ export class Cart {
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.updateItemById = this.updateItemById.bind(this);
-    this.updateCart = this.updateCart.bind(this); 
+    this.updateCart = this.updateCart.bind(this);
     this.buildSelectors = this.buildSelectors.bind(this);
 
 
@@ -120,15 +121,15 @@ export class Cart {
      */
     function add(e) {
       e.preventDefault();
-      let id = jQuery('select[name=id]').val();
-      let quantity = Number(jQuery("input[name=quantity]").val());
+      const id = jQuery('select[name=id]').val();
+      const quantity = Number(jQuery('input[name=quantity]').val());
       let properties = null;
-      if (jQuery("input[name*=properties]").length > 0) {
+      if (jQuery('input[name*=properties]').length > 0) {
         properties = {};
 
-        jQuery("input[name*=properties]").each(() => {
-          var key = jQuery(this).attr('name').split('[')[1].split(']')[0];
-          var value = jQuery(this).val();
+        jQuery('input[name*=properties]').each(() => {
+          const key = jQuery(this).attr('name').split('[')[1].split(']')[0];
+          const value = jQuery(this).val();
           properties[key] = value;
         });
       }
@@ -137,8 +138,8 @@ export class Cart {
 
     function decreaseQuantity(e) {
       e.preventDefault();
-      var qty = Number(jQuery(this).next(e.data.cart.selectors.itemQuantity).text()) - 1;
-      var itemId = Number(jQuery(this).next(e.data.cart.selectors.itemQuantity).data('item-id'));
+      const qty = Number(jQuery(this).next(e.data.cart.selectors.itemQuantity).text()) - 1;
+      const itemId = Number(jQuery(this).next(e.data.cart.selectors.itemQuantity).data('item-id'));
       e.data.cart.updateItemById(itemId, qty);
       if (qty >= 1) {
         jQuery(this).next(e.data.cart.selectors.itemQuantity).text(qty);
@@ -147,21 +148,21 @@ export class Cart {
 
     function quickAdd(e) {
       e.preventDefault();
-      var itemId = Number(jQuery(this).data('quick-add'));
-      var qty = Number(jQuery(this).data('quick-add-qty')) || 1;
+      const itemId = Number(jQuery(this).data('quick-add'));
+      const qty = Number(jQuery(this).data('quick-add-qty')) || 1;
       e.data.cart.addItem(itemId, qty);
     }
 
     function increaseQuantity(e) {
       e.preventDefault();
-      var qty = Number(jQuery(this).prev(e.data.cart.selectors.itemQuantity).text()) + 1;
-      var itemId = Number(jQuery(this).prev(e.data.cart.selectors.itemQuantity).data('item-id'));
+      const qty = Number(jQuery(this).prev(e.data.cart.selectors.itemQuantity).text()) + 1;
+      const itemId = Number(jQuery(this).prev(e.data.cart.selectors.itemQuantity).data('item-id'));
       e.data.cart.updateItemById(itemId, qty);
     }
 
     function remove(e) {
       e.preventDefault();
-      var itemId = Number(jQuery(this).data('item-id'));
+      const itemId = Number(jQuery(this).data('item-id'));
       e.data.cart.removeById(itemId);
     }
 
@@ -209,17 +210,16 @@ export class Cart {
     this.cart = cart;
     jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
     jQuery(this.selectors.cartTotal).text(Currency.formatMoney(this.cart.total_price));
-    if (updateCart) { //This will update any cart html if unless updateCart=false
-      var template = jQuery(this.selectors.emptyTemplate).clone();
-      var master = jQuery(this.selectors.itemContainer);
+    if (updateCart) { // This will update any cart html if unless updateCart=false
+      const template = jQuery(this.selectors.emptyTemplate).clone();
+      const master = jQuery(this.selectors.itemContainer);
       master.html('');
-      var temp = [];
       this.cart.items.forEach((item) => {
-        var temp = template.clone();
-        var image_size = temp.find('.item-image').data('image-size') || 'small';
-        var image_url = Images.getImageUrl(item.image, image_size);
+        const temp = template.clone();
+        const imageSize = temp.find('.item-image').data('image-size') || 'small';
+        const imageUrl = Images.getImageUrl(item.image, imageSize);
         temp.find('.item-title').text(item.title);
-        temp.find('.item-image').attr('src', image_url);
+        temp.find('.item-image').attr('src', imageUrl);
         temp.find('.item-price').text(Currency.formatMoney(item.line_price));
         temp.find('.item-qty').text(item.quantity);
         temp.find('[data-item-id]').attr('data-item-id', item.id);
@@ -235,11 +235,8 @@ export class Cart {
    * @param {number} quantity - The quantity of the variant you want to add to the cart. Defaults to 1 if set to less than 1.
    * @param {object} properties - The custom properties of the item.
    */
-  addItem(id, quantity=1, properties={}) {
-    if (quantity < 1) {
-      quantity = 1;
-    }
-    let data = {};
+  addItem(id, quantity = 1, properties = {}) {
+    const data = {};
     data.id = id;
     data.quantity = quantity;
     if (properties) {
@@ -267,16 +264,16 @@ export class Cart {
   }
 
   removeById(id) {
-    let data = {updates: {}};
+    const data = { updates: {} };
     data.updates[id] = 0;
     this.queue.add('/cart/update.js', data, {});
     return this.getCart();
   }
 
   updateItemById(id, quantity) {
-    let data = {updates: {}};
+    const data = { updates: {} };
     data.updates[id] = quantity;
-    var options = {
+    const options = {
       updateCart: true,
       success: [this.updateCart],
     };
@@ -284,9 +281,9 @@ export class Cart {
     return this.getCart();
   }
 
-  updateItemsById(items, options={}) {
-    var data = {
-      updates: items
+  updateItemsById(items, options = {}) {
+    const data = {
+      updates: items,
     };
     if (items.length > 0) {
       this.queue.add('/cart/update.js', data, options);
@@ -296,32 +293,33 @@ export class Cart {
 
   /**
    * Set a cart attribute
-   * @param {string} name 
-   * @param {string} value 
-   * @param {object} options 
+   * @param {string} name
+   * @param {string} value
+   * @param {object} options
    * @returns Nothing
    */
   setAttribute(name, value, options = {}) {
-    var attribute = {};
+    const attribute = {};
     attribute[name] = value;
     return this.setAttributes(attribute, options);
   }
 
   /**
    * Set multiple cart attributes by passing them in an object.
-   * @param {object} attributes 
-   * @param {object} options 
+   * @param {object} attributes
+   * @param {object} options
    */
-  setAttributes(attributes={}, options={}) {
-    if (attributes !== {}) {
-      var attributes = this.wrapKeys(attributes, 'attributes');
+  setAttributes(attrs = {}, options = {}) {
+    if (attrs !== {}) {
+      const attributes = this.wrapKeys(attrs, 'attributes');
       this.queue.add('/cart/update.js', attributes, options);
     }
     return this.getCart();
   }
 
-  getAttribute(attribute, defaultValue=false) {
-    return this.cart.attributes.hasOwnProperty(attribute) ? this.cart.attributes[attribute] : defaultValue;
+  getAttribute(attribute, defaultValue = false) {
+    return Object.hasOwnProperty.call(this.cart.attributes, attribute) ?
+      this.cart.attributes[attribute] : defaultValue;
   }
 
   getAttributes() {
@@ -334,7 +332,7 @@ export class Cart {
   }
 
   clear() {
-    this.queue.add('/cart/clear.js', {} , {});
+    this.queue.add('/cart/clear.js', {}, {});
     return this.getCart();
   }
 
