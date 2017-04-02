@@ -1,74 +1,8 @@
 const Currency = require('./currency.js');
 // const Images = require('./images.js');
 const Handlebars = require('handlebars');
+const Queue = require('./queue').Queue;
 const jQuery = require('jquery');
-/** Class representing a queue */
-export class Queue {
-  /**
-   * Build a queue.
-   */
-  constructor() {
-    this.queue = [];
-    this.processing = false;
-    this.add = this.add.bind(this);
-    this.process = this.process.bind(this);
-  }
-  /**
-   * Add a request to the queue.
-   * Fires a jQuery event 'cartfox:requestStarted'
-   * @param {string} url - Url to make the request to (i.e. '/cart.js')
-   * @param {object} data - Data to send to the url
-   * (i.e. {id: 123453, quantity: 1, properties: {} })
-   * @param {object} options - Options for the request.
-   * Can include method, success and error functions.
-   * @returns this.process() - begins processing the queue.
-   */
-  add(url, data, options) {
-    console.log(data);
-    const request = {
-      url,
-      data,
-      type: options.type || 'POST',
-      dataType: 'json',
-      statusCode: {
-        422: (err) => {
-          /**
-           * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
-           */
-          console.log(err);
-          jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-        },
-      },
-      success: [options.success],
-      error: (error) => { jQuery(document).trigger('cartfox:requestError', [error]); },
-      complete: [options.complete],
-    };
-    console.log(request);
-    // let request = {};
-    this.queue.push(request);
-    if (this.processing) {
-      return;
-    }
-    jQuery(document).trigger('cartfox:requestStarted');
-    this.process();
-  }
-
-  /**
-   * Process through the queue. Prevents synchonous callbacks.
-   * Fires a jQuery event 'cartfox:requestComplete'
-   */
-  process() {
-    if (!this.queue.length) {
-      this.processing = false;
-      jQuery(document).trigger('cartfox:requestComplete');
-      return;
-    }
-    this.processing = true;
-    const params = this.queue.shift();
-    params.success.push(this.process);
-    jQuery.ajax(params);
-  }
-}
 
 /** Class representing a cart */
 export class Cart {
@@ -87,6 +21,7 @@ export class Cart {
    * with the json filter. {{ cart | json }}
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
+
   constructor(cart = {}, selectors) {
     this.queue = new Queue();
     this.cart = cart;
@@ -112,6 +47,7 @@ export class Cart {
     this.buildSelectors = this.buildSelectors.bind(this);
 
     this.buildSelectors(this.selectors);
+    return this.cart;
   }
   /**
    * Build the event listeners and DOMElement selectors.
@@ -151,7 +87,6 @@ export class Cart {
     function quickAdd(e) {
       e.preventDefault();
       const itemId = Number(jQuery(this).data('quick-add'));
-      console.log(itemId);
       const qty = Number(jQuery(this).data('quick-add-qty')) || 1;
       e.data.cart.addItem(itemId, qty);
     }
@@ -172,15 +107,19 @@ export class Cart {
     function update(e) {
       e.preventDefault();
     }
-    jQuery(document).on('click', selectors.addItem, add.bind(this));
-    jQuery(document).on('click', selectors.updateItem, { cart: this }, update);
-    jQuery(document).on('click', selectors.removeItem, { cart: this }, remove);
-    jQuery(document).on('click', selectors.decreaseQuantity, { cart: this }, decreaseQuantity);
-    jQuery(document).on('click', selectors.increaseQuantity, { cart: this }, increaseQuantity);
-    jQuery(document).on('click', '[data-quick-add]', { cart: this }, quickAdd);
+    try {
+      jQuery(document).on('click', selectors.addItem, add.bind(this));
+      jQuery(document).on('click', selectors.updateItem, { cart: this }, update);
+      jQuery(document).on('click', selectors.removeItem, { cart: this }, remove);
+      jQuery(document).on('click', selectors.decreaseQuantity, { cart: this }, decreaseQuantity);
+      jQuery(document).on('click', selectors.increaseQuantity, { cart: this }, increaseQuantity);
+      jQuery(document).on('click', '[data-quick-add]', { cart: this }, quickAdd);
+    } catch (e) {
+      console.log('No document');
+    }
   }
 
-  wrapKeys(obj, type = 'properties', defaultValue = null) {
+  static wrapKeys(obj, type = 'properties', defaultValue = null) {
     const wrapped = {};
     Object.keys(obj).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -216,7 +155,8 @@ export class Cart {
     const template = jQuery(this.selectors.emptyTemplate).html();
     const itemContainer = jQuery(this.selectors.itemsContainer);
     jQuery(itemContainer).html('');
-    Handlebars.registerHelper('formatMoney', amount => Handlebars.SafeString(`<span class='money'>${Currency.formatMoney(amount)}</span>`));
+    Handlebars.registerHelper('formatMoney', amount => Handlebars.SafeString(`<span class='money'>
+    ${Currency.formatMoney(amount)}</span>`));
     if (updateCart) { // This will update any cart html if unless updateCart=false
       cart.items.forEach((lineItem) => {
         const itemTemplate = template;
@@ -238,15 +178,11 @@ export class Cart {
    * @param {object} properties - The custom properties of the item.
    */
   addItem(id, quantity = 1, properties = {}) {
-    let qty = quantity;
-    if (qty < 1) {
-      qty = 1;
-    }
     const data = {};
     data.id = id;
-    data.quantity = qty;
+    data.quantity = quantity;
     if (properties === {}) {
-      data.properties = this.wrapKeys(properties);
+      data.properties = Cart.wrapKeys(properties);
     }
     this.queue.add('/cart/add.js', data, {});
 
@@ -309,7 +245,7 @@ export class Cart {
    */
   setAttributes(attrs = {}, options = {}) {
     if (attrs !== {}) {
-      const attributes = this.wrapKeys(attrs, 'attributes');
+      const attributes = Cart.wrapKeys(attrs, 'attributes');
       this.queue.add('/cart/update.js', attributes, options);
     }
     return this.getCart();
@@ -326,7 +262,7 @@ export class Cart {
   }
 
   clearAttributes() {
-    this.queue.add('/cart/update.js', this.wrapKeys(this.getAttributes(), 'attributes', ''));
+    this.queue.add('/cart/update.js', Cart.wrapKeys(this.getAttributes(), 'attributes', ''));
     return this.getCart();
   }
 
@@ -334,6 +270,4 @@ export class Cart {
     this.queue.add('/cart/clear.js', {}, {});
     return this.getCart();
   }
-
-
 }

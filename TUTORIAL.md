@@ -16,11 +16,11 @@ Installation
   ```liquid
     {{ 'cartfox.min.js' | asset_url | script_tag }}
   ```
-3. Now at the bottom of your theme place the following:
+3. Below that place the following code
 
 ```html
 <script>
-  var cartfox = new Cartfox({{ cart | json }}, {
+  var cartfox = new Cartfox.Cart({{ cart | json }}, {
         addItem: '#AddToCart',
         cartItemCount: "#CartItemCount",
         cartTotal: "#CartTotal, .cart-total",

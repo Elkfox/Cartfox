@@ -1,7 +1,7 @@
-var UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-var HtmlwebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const HtmlwebpackPlugin = require('html-webpack-plugin');
 
-var config = {
+const config = {
   module: {
     rules: [
       {
@@ -22,26 +22,26 @@ var config = {
   },
 };
 
-var unCompressed = Object.assign({}, config, {
-entry: ['./src/cartfox.js'],
+const unCompressed = Object.assign({}, config, {
+  entry: ['./src/index.js'],
   output: {
     path: './dist',
     filename: 'cartfox.js',
     library: 'Cartfox',
-  },   
-   externals: {
-        // require("jquery") is external and available
-        //  on the global var jQuery
-        "jquery": "jQuery",
-    },
+  },
+  externals: {
+    // require("jquery") is external and available
+    //  on the global var jQuery
+    'jquery': 'jQuery',
+  },
 
   plugins: [
     new HtmlwebpackPlugin(),
-  ]
+  ],
 });
 
-var minified = Object.assign({}, config, {
-entry: ['./src/cartfox.js'],
+const minified = Object.assign({}, config, {
+  entry: ['./src/index.js'],
   output: {
     path: './dist',
     filename: 'cartfox.min.js',
@@ -57,46 +57,11 @@ entry: ['./src/cartfox.js'],
     new HtmlwebpackPlugin(),
     new UglifyJsPlugin({
       beautify: false,
-      mangle: { screw_ie8 : true },
+      mangle: { screw_ie8: true },
       compress: { screw_ie8: true, warnings: false },
-      comments: false
-    })
-  ]
-});
-
-var unCompressedjQuery = Object.assign({}, config, {
-entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
-         ],
-  output: {
-    path: './dist',
-    filename: 'cartfox.jquery.js',
-    library: 'Cartfox'
-  },   
-
-  plugins: [
-    new HtmlwebpackPlugin(),
-  ]
-});
-
-var minifiedjQuery = Object.assign({}, config, {
-entry: [ 'babel-polyfill', 
-          './src/cartfox.js'
-         ],
-  output: {
-    path: './dist',
-    filename: 'cartfox.jquery.min.js',
-    library: 'Cartfox'
-  },   
-  plugins: [
-    new HtmlwebpackPlugin(),
-    new UglifyJsPlugin({
-      beautify: false,
-      mangle: { screw_ie8 : true },
-      compress: { screw_ie8: true, warnings: false },
-      comments: false
-    })
-  ]
+      comments: false,
+    }),
+  ],
 });
 
 module.exports = [unCompressed, minified];
