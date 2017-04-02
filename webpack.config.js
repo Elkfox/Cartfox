@@ -1,5 +1,6 @@
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 const config = {
   module: {
@@ -25,7 +26,7 @@ const config = {
 const unCompressed = Object.assign({}, config, {
   entry: ['./src/index.js'],
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, 'dist'),
     filename: 'cartfox.js',
     library: 'Cartfox',
   },
@@ -43,7 +44,7 @@ const unCompressed = Object.assign({}, config, {
 const minified = Object.assign({}, config, {
   entry: ['./src/index.js'],
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, 'dist'),
     filename: 'cartfox.min.js',
     library: 'Cartfox',
   },

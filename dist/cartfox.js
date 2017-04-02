@@ -64,7 +64,7 @@ var Cartfox =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 52);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -101,8 +101,8 @@ module.exports = function(exec){
 
 var global    = __webpack_require__(4)
   , core      = __webpack_require__(0)
-  , ctx       = __webpack_require__(27)
-  , hide      = __webpack_require__(31)
+  , ctx       = __webpack_require__(30)
+  , hide      = __webpack_require__(34)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -180,6 +180,54 @@ module.exports = function(it){
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(21);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -189,22 +237,22 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(26);
+var cof = __webpack_require__(29);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject       = __webpack_require__(24)
-  , IE8_DOM_DEFINE = __webpack_require__(32)
-  , toPrimitive    = __webpack_require__(43)
+var anObject       = __webpack_require__(27)
+  , IE8_DOM_DEFINE = __webpack_require__(35)
+  , toPrimitive    = __webpack_require__(46)
   , dP             = Object.defineProperty;
 
 exports.f = __webpack_require__(1) ? Object.defineProperty : function defineProperty(O, P, Attributes){
@@ -220,19 +268,19 @@ exports.f = __webpack_require__(1) ? Object.defineProperty : function defineProp
 };
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys       = __webpack_require__(35)
-  , enumBugKeys = __webpack_require__(29);
+var $keys       = __webpack_require__(38)
+  , enumBugKeys = __webpack_require__(32);
 
 module.exports = Object.keys || function keys(O){
   return $keys(O, enumBugKeys);
 };
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -243,28 +291,47 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(7)
-  , defined = __webpack_require__(6);
+var IObject = __webpack_require__(9)
+  , defined = __webpack_require__(8);
 module.exports = function(it){
   return IObject(defined(it));
 };
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(6);
+var defined = __webpack_require__(8);
 module.exports = function(it){
   return Object(defined(it));
 };
 
 /***/ }),
-/* 13 */
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cart = __webpack_require__(17).Cart;
+
+module.exports = {
+  Cart: Cart
+};
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -273,114 +340,33 @@ module.exports = function(it){
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Cart = exports.Queue = undefined;
+exports.Cart = undefined;
 
-var _keys = __webpack_require__(17);
+var _keys = __webpack_require__(22);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _assign = __webpack_require__(15);
+var _assign = __webpack_require__(20);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _classCallCheck2 = __webpack_require__(18);
+var _classCallCheck2 = __webpack_require__(6);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(19);
+var _createClass2 = __webpack_require__(7);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Currency = __webpack_require__(14);
+var Currency = __webpack_require__(18);
 // const Images = require('./images.js');
-var Handlebars = __webpack_require__(48);
-var jQuery = __webpack_require__(49);
-/** Class representing a queue */
-
-var Queue = exports.Queue = function () {
-  /**
-   * Build a queue.
-   */
-  function Queue() {
-    (0, _classCallCheck3.default)(this, Queue);
-
-    this.queue = [];
-    this.processing = false;
-    this.add = this.add.bind(this);
-    this.process = this.process.bind(this);
-  }
-  /**
-   * Add a request to the queue.
-   * Fires a jQuery event 'cartfox:requestStarted'
-   * @param {string} url - Url to make the request to (i.e. '/cart.js')
-   * @param {object} data - Data to send to the url
-   * (i.e. {id: 123453, quantity: 1, properties: {} })
-   * @param {object} options - Options for the request.
-   * Can include method, success and error functions.
-   * @returns this.process() - begins processing the queue.
-   */
-
-
-  (0, _createClass3.default)(Queue, [{
-    key: 'add',
-    value: function add(url, data, options) {
-      console.log(data);
-      var request = {
-        url: url,
-        data: data,
-        type: options.type || 'POST',
-        dataType: 'json',
-        statusCode: {
-          422: function _(err) {
-            /**
-             * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
-             */
-            console.log(err);
-            jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-          }
-        },
-        success: [options.success],
-        error: function error(_error) {
-          jQuery(document).trigger('cartfox:requestError', [_error]);
-        },
-        complete: [options.complete]
-      };
-      console.log(request);
-      // let request = {};
-      this.queue.push(request);
-      if (this.processing) {
-        return;
-      }
-      jQuery(document).trigger('cartfox:requestStarted');
-      this.process();
-    }
-
-    /**
-     * Process through the queue. Prevents synchonous callbacks.
-     * Fires a jQuery event 'cartfox:requestComplete'
-     */
-
-  }, {
-    key: 'process',
-    value: function process() {
-      if (!this.queue.length) {
-        this.processing = false;
-        jQuery(document).trigger('cartfox:requestComplete');
-        return;
-      }
-      this.processing = true;
-      var params = this.queue.shift();
-      params.success.push(this.process);
-      jQuery.ajax(params);
-    }
-  }]);
-  return Queue;
-}();
+var Handlebars = __webpack_require__(51);
+var Queue = __webpack_require__(19).Queue;
+var jQuery = __webpack_require__(15);
 
 /** Class representing a cart */
-
 
 var Cart = function () {
   /**
@@ -398,6 +384,7 @@ var Cart = function () {
    * with the json filter. {{ cart | json }}
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
+
   function Cart() {
     var cart = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var selectors = arguments[1];
@@ -427,6 +414,7 @@ var Cart = function () {
     this.buildSelectors = this.buildSelectors.bind(this);
 
     this.buildSelectors(this.selectors);
+    return this.cart;
   }
   /**
    * Build the event listeners and DOMElement selectors.
@@ -472,7 +460,6 @@ var Cart = function () {
       function quickAdd(e) {
         e.preventDefault();
         var itemId = Number(jQuery(this).data('quick-add'));
-        console.log(itemId);
         var qty = Number(jQuery(this).data('quick-add-qty')) || 1;
         e.data.cart.addItem(itemId, qty);
       }
@@ -493,35 +480,24 @@ var Cart = function () {
       function update(e) {
         e.preventDefault();
       }
-      jQuery(document).on('click', selectors.addItem, add.bind(this));
-      jQuery(document).on('click', selectors.updateItem, { cart: this }, update);
-      jQuery(document).on('click', selectors.removeItem, { cart: this }, remove);
-      jQuery(document).on('click', selectors.decreaseQuantity, { cart: this }, decreaseQuantity);
-      jQuery(document).on('click', selectors.increaseQuantity, { cart: this }, increaseQuantity);
-      jQuery(document).on('click', '[data-quick-add]', { cart: this }, quickAdd);
+      try {
+        jQuery(document).on('click', selectors.addItem, add.bind(this));
+        jQuery(document).on('click', selectors.updateItem, { cart: this }, update);
+        jQuery(document).on('click', selectors.removeItem, { cart: this }, remove);
+        jQuery(document).on('click', selectors.decreaseQuantity, { cart: this }, decreaseQuantity);
+        jQuery(document).on('click', selectors.increaseQuantity, { cart: this }, increaseQuantity);
+        jQuery(document).on('click', '[data-quick-add]', { cart: this }, quickAdd);
+      } catch (e) {
+        console.log('No document');
+      }
     }
   }, {
-    key: 'wrapKeys',
-    value: function wrapKeys(obj) {
-      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'properties';
-      var defaultValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    key: 'getCart',
 
-      var wrapped = {};
-      (0, _keys2.default)(obj).forEach(function (key) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var value = obj[key];
-          wrapped[type + '[' + key + ']'] = defaultValue === null ? value : defaultValue;
-        }
-      });
-      return wrapped;
-    }
 
     /**
      * Get the cart
      */
-
-  }, {
-    key: 'getCart',
     value: function getCart() {
       var options = {
         updateCart: true,
@@ -550,7 +526,7 @@ var Cart = function () {
       var itemContainer = jQuery(this.selectors.itemsContainer);
       jQuery(itemContainer).html('');
       Handlebars.registerHelper('formatMoney', function (amount) {
-        return Handlebars.SafeString('<span class=\'money\'>' + Currency.formatMoney(amount) + '</span>');
+        return Handlebars.SafeString('<span class=\'money\'>\n    ' + Currency.formatMoney(amount) + '</span>');
       });
       if (_updateCart) {
         // This will update any cart html if unless updateCart=false
@@ -580,15 +556,11 @@ var Cart = function () {
       var quantity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var properties = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-      var qty = quantity;
-      if (qty < 1) {
-        qty = 1;
-      }
       var data = {};
       data.id = id;
-      data.quantity = qty;
+      data.quantity = quantity;
       if (properties === {}) {
-        data.properties = this.wrapKeys(properties);
+        data.properties = Cart.wrapKeys(properties);
       }
       this.queue.add('/cart/add.js', data, {});
 
@@ -668,7 +640,7 @@ var Cart = function () {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       if (attrs !== {}) {
-        var attributes = this.wrapKeys(attrs, 'attributes');
+        var attributes = Cart.wrapKeys(attrs, 'attributes');
         this.queue.add('/cart/update.js', attributes, options);
       }
       return this.getCart();
@@ -689,7 +661,7 @@ var Cart = function () {
   }, {
     key: 'clearAttributes',
     value: function clearAttributes() {
-      this.queue.add('/cart/update.js', this.wrapKeys(this.getAttributes(), 'attributes', ''));
+      this.queue.add('/cart/update.js', Cart.wrapKeys(this.getAttributes(), 'attributes', ''));
       return this.getCart();
     }
   }, {
@@ -698,6 +670,21 @@ var Cart = function () {
       this.queue.add('/cart/clear.js', {}, {});
       return this.getCart();
     }
+  }], [{
+    key: 'wrapKeys',
+    value: function wrapKeys(obj) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'properties';
+      var defaultValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+      var wrapped = {};
+      (0, _keys2.default)(obj).forEach(function (key) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var value = obj[key];
+          wrapped[type + '[' + key + ']'] = defaultValue === null ? value : defaultValue;
+        }
+      });
+      return wrapped;
+    }
   }]);
   return Cart;
 }();
@@ -705,7 +692,7 @@ var Cart = function () {
 exports.Cart = Cart;
 
 /***/ }),
-/* 14 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -761,97 +748,166 @@ var Currency = {
 module.exports = Currency;
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(20), __esModule: true };
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(21), __esModule: true };
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(22), __esModule: true };
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Queue = undefined;
 
-var _defineProperty = __webpack_require__(16);
+var _classCallCheck2 = __webpack_require__(6);
 
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(7);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-    }
-  }
+var jQuery = __webpack_require__(15);
+/** Class representing a queue */
 
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
+var Queue = exports.Queue = function () {
+  /**
+   * Build a queue.
+   */
+  function Queue() {
+    (0, _classCallCheck3.default)(this, Queue);
+
+    this.queue = [];
+    this.processing = false;
+    this.add = this.add.bind(this);
+    this.process = this.process.bind(this);
+  }
+  /**
+   * Add a request to the queue.
+   * Fires a jQuery event 'cartfox:requestStarted'
+   * @param {string} url - Url to make the request to (i.e. '/cart.js')
+   * @param {object} data - Data to send to the url
+   * (i.e. {id: 123453, quantity: 1, properties: {} })
+   * @param {object} options - Options for the request.
+   * Can include method, success and error functions.
+   * @return this.process() - begins processing the queue.
+   */
+
+
+  (0, _createClass3.default)(Queue, [{
+    key: 'add',
+    value: function add(url, data, options) {
+      var request = {
+        url: url,
+        data: data,
+        type: options.type || 'POST',
+        dataType: 'json',
+        statusCode: {
+          422: function _(err) {
+            /**
+             * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
+             */
+            try {
+              jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
+            } catch (e) {
+              console.log('No document');
+            }
+          }
+        },
+        success: [options.success],
+        error: function error(_error) {
+          jQuery(document).trigger('cartfox:requestError', [_error]);
+        },
+        complete: [options.complete]
+      };
+      // let request = {};
+      this.queue.push(request);
+
+      if (this.processing) {
+        return true;
+      }
+
+      try {
+        jQuery(document).trigger('cartfox:requestStarted');
+      } catch (e) {
+        console.log('No document');
+      }
+      return this.process();
+    }
+
+    /**
+     * Process through the queue. Prevents synchonous callbacks.
+     * Fires a jQuery event 'cartfox:requestComplete'
+     */
+
+  }, {
+    key: 'process',
+    value: function process() {
+      if (!this.queue.length) {
+        this.processing = false;
+        jQuery(document).trigger('cartfox:requestComplete');
+        return true;
+      }
+      this.processing = true;
+      var params = this.queue.shift();
+      params.success.push(this.process);
+      try {
+        jQuery.ajax(params);
+      } catch (e) {
+        console.log(e);
+      }
+      return params;
+    }
+  }]);
+  return Queue;
 }();
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(45);
-module.exports = __webpack_require__(0).Object.assign;
+module.exports = { "default": __webpack_require__(23), __esModule: true };
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(46);
+module.exports = { "default": __webpack_require__(24), __esModule: true };
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(25), __esModule: true };
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(48);
+module.exports = __webpack_require__(0).Object.assign;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(49);
 var $Object = __webpack_require__(0).Object;
 module.exports = function defineProperty(it, key, desc){
   return $Object.defineProperty(it, key, desc);
 };
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(47);
+__webpack_require__(50);
 module.exports = __webpack_require__(0).Object.keys;
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -860,7 +916,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(5);
@@ -870,14 +926,14 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(11)
-  , toLength  = __webpack_require__(42)
-  , toIndex   = __webpack_require__(41);
+var toIObject = __webpack_require__(13)
+  , toLength  = __webpack_require__(45)
+  , toIndex   = __webpack_require__(44);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -896,7 +952,7 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -906,11 +962,11 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(23);
+var aFunction = __webpack_require__(26);
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -931,7 +987,7 @@ module.exports = function(fn, that, length){
 };
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(5)
@@ -943,7 +999,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -952,7 +1008,7 @@ module.exports = (
 ).split(',');
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -961,11 +1017,11 @@ module.exports = function(it, key){
 };
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP         = __webpack_require__(8)
-  , createDesc = __webpack_require__(38);
+var dP         = __webpack_require__(10)
+  , createDesc = __webpack_require__(41);
 module.exports = __webpack_require__(1) ? function(object, key, value){
   return dP.f(object, key, createDesc(1, value));
 } : function(object, key, value){
@@ -974,25 +1030,25 @@ module.exports = __webpack_require__(1) ? function(object, key, value){
 };
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(1) && !__webpack_require__(2)(function(){
-  return Object.defineProperty(__webpack_require__(28)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+  return Object.defineProperty(__webpack_require__(31)('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys  = __webpack_require__(9)
-  , gOPS     = __webpack_require__(34)
-  , pIE      = __webpack_require__(36)
-  , toObject = __webpack_require__(12)
-  , IObject  = __webpack_require__(7)
+var getKeys  = __webpack_require__(11)
+  , gOPS     = __webpack_require__(37)
+  , pIE      = __webpack_require__(39)
+  , toObject = __webpack_require__(14)
+  , IObject  = __webpack_require__(9)
   , $assign  = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
@@ -1021,19 +1077,19 @@ module.exports = !$assign || __webpack_require__(2)(function(){
 } : $assign;
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has          = __webpack_require__(30)
-  , toIObject    = __webpack_require__(11)
-  , arrayIndexOf = __webpack_require__(25)(false)
-  , IE_PROTO     = __webpack_require__(39)('IE_PROTO');
+var has          = __webpack_require__(33)
+  , toIObject    = __webpack_require__(13)
+  , arrayIndexOf = __webpack_require__(28)(false)
+  , IE_PROTO     = __webpack_require__(42)('IE_PROTO');
 
 module.exports = function(object, names){
   var O      = toIObject(object)
@@ -1049,13 +1105,13 @@ module.exports = function(object, names){
 };
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -1070,7 +1126,7 @@ module.exports = function(KEY, exec){
 };
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = function(bitmap, value){
@@ -1083,17 +1139,17 @@ module.exports = function(bitmap, value){
 };
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(40)('keys')
-  , uid    = __webpack_require__(44);
+var shared = __webpack_require__(43)('keys')
+  , uid    = __webpack_require__(47);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(4)
@@ -1104,10 +1160,10 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(10)
+var toInteger = __webpack_require__(12)
   , max       = Math.max
   , min       = Math.min;
 module.exports = function(index, length){
@@ -1116,18 +1172,18 @@ module.exports = function(index, length){
 };
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(10)
+var toInteger = __webpack_require__(12)
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -1144,7 +1200,7 @@ module.exports = function(it, S){
 };
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports) {
 
 var id = 0
@@ -1154,38 +1210,38 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
 var $export = __webpack_require__(3);
 
-$export($export.S + $export.F, 'Object', {assign: __webpack_require__(33)});
+$export($export.S + $export.F, 'Object', {assign: __webpack_require__(36)});
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(3);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(1), 'Object', {defineProperty: __webpack_require__(8).f});
+$export($export.S + $export.F * !__webpack_require__(1), 'Object', {defineProperty: __webpack_require__(10).f});
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(12)
-  , $keys    = __webpack_require__(9);
+var toObject = __webpack_require__(14)
+  , $keys    = __webpack_require__(11);
 
-__webpack_require__(37)('keys', function(){
+__webpack_require__(40)('keys', function(){
   return function keys(it){
     return $keys(toObject(it));
   };
 });
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**!
@@ -1271,16 +1327,10 @@ THE SOFTWARE.
 f.push(" != null ? helper : ",this.aliasable("helpers.helperMissing"))),this.push(["(",f,d.paramsInit?["),(",d.paramsInit]:[],"),","(typeof helper === ",this.aliasable('"function"')," ? ",this.source.functionCall("helper","call",d.callParams)," : helper))"])},invokePartial:function(a,b,c){var d=[],e=this.setupParams(b,1,d);a&&(b=this.popStack(),delete e.name),c&&(e.indent=JSON.stringify(c)),e.helpers="helpers",e.partials="partials",e.decorators="container.decorators",a?d.unshift(b):d.unshift(this.nameLookup("partials",b,"partial")),this.options.compat&&(e.depths="depths"),e=this.objectLiteral(e),d.push(e),this.push(this.source.functionCall("container.invokePartial","",d))},assignToHash:function(a){var b=this.popStack(),c=void 0,d=void 0,e=void 0;this.trackIds&&(e=this.popStack()),this.stringParams&&(d=this.popStack(),c=this.popStack());var f=this.hash;c&&(f.contexts[a]=c),d&&(f.types[a]=d),e&&(f.ids[a]=e),f.values[a]=b},pushId:function(a,b,c){"BlockParam"===a?this.pushStackLiteral("blockParams["+b[0]+"].path["+b[1]+"]"+(c?" + "+JSON.stringify("."+c):"")):"PathExpression"===a?this.pushString(b):"SubExpression"===a?this.pushStackLiteral("true"):this.pushStackLiteral("null")},compiler:e,compileChildren:function(a,b){for(var c=a.children,d=void 0,e=void 0,f=0,g=c.length;f<g;f++){d=c[f],e=new this.compiler;var h=this.matchExistingProgram(d);if(null==h){this.context.programs.push("");var i=this.context.programs.length;d.index=i,d.name="program"+i,this.context.programs[i]=e.compile(d,b,this.context,!this.precompile),this.context.decorators[i]=e.decorators,this.context.environments[i]=d,this.useDepths=this.useDepths||e.useDepths,this.useBlockParams=this.useBlockParams||e.useBlockParams,d.useDepths=this.useDepths,d.useBlockParams=this.useBlockParams}else d.index=h.index,d.name="program"+h.index,this.useDepths=this.useDepths||h.useDepths,this.useBlockParams=this.useBlockParams||h.useBlockParams}},matchExistingProgram:function(a){for(var b=0,c=this.context.environments.length;b<c;b++){var d=this.context.environments[b];if(d&&d.equals(a))return d}},programExpression:function(a){var b=this.environment.children[a],c=[b.index,"data",b.blockParams];return(this.useBlockParams||this.useDepths)&&c.push("blockParams"),this.useDepths&&c.push("depths"),"container.program("+c.join(", ")+")"},useRegister:function(a){this.registers[a]||(this.registers[a]=!0,this.registers.list.push(a))},push:function(a){return a instanceof d||(a=this.source.wrap(a)),this.inlineStack.push(a),a},pushStackLiteral:function(a){this.push(new d(a))},pushSource:function(a){this.pendingContent&&(this.source.push(this.appendToBuffer(this.source.quotedString(this.pendingContent),this.pendingLocation)),this.pendingContent=void 0),a&&this.source.push(a)},replaceStack:function(a){var b=["("],c=void 0,e=void 0,f=void 0;if(!this.isInline())throw new j["default"]("replaceStack on non-inline");var g=this.popStack(!0);if(g instanceof d)c=[g.value],b=["(",c],f=!0;else{e=!0;var h=this.incrStack();b=["((",this.push(h)," = ",g,")"],c=this.topStack()}var i=a.call(this,c);f||this.popStack(),e&&this.stackSlot--,this.push(b.concat(i,")"))},incrStack:function(){return this.stackSlot++,this.stackSlot>this.stackVars.length&&this.stackVars.push("stack"+this.stackSlot),this.topStackName()},topStackName:function(){return"stack"+this.stackSlot},flushInline:function(){var a=this.inlineStack;this.inlineStack=[];for(var b=0,c=a.length;b<c;b++){var e=a[b];if(e instanceof d)this.compileStack.push(e);else{var f=this.incrStack();this.pushSource([f," = ",e,";"]),this.compileStack.push(f)}}},isInline:function(){return this.inlineStack.length},popStack:function(a){var b=this.isInline(),c=(b?this.inlineStack:this.compileStack).pop();if(!a&&c instanceof d)return c.value;if(!b){if(!this.stackSlot)throw new j["default"]("Invalid stack pop");this.stackSlot--}return c},topStack:function(){var a=this.isInline()?this.inlineStack:this.compileStack,b=a[a.length-1];return b instanceof d?b.value:b},contextName:function(a){return this.useDepths&&a?"depths["+a+"]":"depth"+a},quotedString:function(a){return this.source.quotedString(a)},objectLiteral:function(a){return this.source.objectLiteral(a)},aliasable:function(a){var b=this.aliases[a];return b?(b.referenceCount++,b):(b=this.aliases[a]=this.source.wrap(a),b.aliasable=!0,b.referenceCount=1,b)},setupHelper:function(a,b,c){var d=[],e=this.setupHelperArgs(b,a,d,c),f=this.nameLookup("helpers",b,"helper"),g=this.aliasable(this.contextName(0)+" != null ? "+this.contextName(0)+" : {}");return{params:d,paramsInit:e,name:f,callParams:[g].concat(d)}},setupParams:function(a,b,c){var d={},e=[],f=[],g=[],h=!c,i=void 0;h&&(c=[]),d.name=this.quotedString(a),d.hash=this.popStack(),this.trackIds&&(d.hashIds=this.popStack()),this.stringParams&&(d.hashTypes=this.popStack(),d.hashContexts=this.popStack());var j=this.popStack(),k=this.popStack();(k||j)&&(d.fn=k||"container.noop",d.inverse=j||"container.noop");for(var l=b;l--;)i=this.popStack(),c[l]=i,this.trackIds&&(g[l]=this.popStack()),this.stringParams&&(f[l]=this.popStack(),e[l]=this.popStack());return h&&(d.args=this.source.generateArray(c)),this.trackIds&&(d.ids=this.source.generateArray(g)),this.stringParams&&(d.types=this.source.generateArray(f),d.contexts=this.source.generateArray(e)),this.options.data&&(d.data="data"),this.useBlockParams&&(d.blockParams="blockParams"),d},setupHelperArgs:function(a,b,c,d){var e=this.setupParams(a,b,c);return e=this.objectLiteral(e),d?(this.useRegister("options"),c.push("options"),["options=",e]):c?(c.push(e),""):e}},function(){for(var a="break else new var case finally return void catch for switch while continue function this with default if throw delete in try do instanceof typeof abstract enum int short boolean export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public let yield await null true false".split(" "),b=e.RESERVED_WORDS={},c=0,d=a.length;c<d;c++)b[a[c]]=!0}(),e.isValidJavaScriptVariableName=function(a){return!e.RESERVED_WORDS[a]&&/^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(a)},b["default"]=e,a.exports=b["default"]},function(a,b,c){"use strict";function d(a,b,c){if(f.isArray(a)){for(var d=[],e=0,g=a.length;e<g;e++)d.push(b.wrap(a[e],c));return d}return"boolean"==typeof a||"number"==typeof a?a+"":a}function e(a){this.srcFile=a,this.source=[]}b.__esModule=!0;var f=c(5),g=void 0;try{}catch(h){}g||(g=function(a,b,c,d){this.src="",d&&this.add(d)},g.prototype={add:function(a){f.isArray(a)&&(a=a.join("")),this.src+=a},prepend:function(a){f.isArray(a)&&(a=a.join("")),this.src=a+this.src},toStringWithSourceMap:function(){return{code:this.toString()}},toString:function(){return this.src}}),e.prototype={isEmpty:function(){return!this.source.length},prepend:function(a,b){this.source.unshift(this.wrap(a,b))},push:function(a,b){this.source.push(this.wrap(a,b))},merge:function(){var a=this.empty();return this.each(function(b){a.add(["  ",b,"\n"])}),a},each:function(a){for(var b=0,c=this.source.length;b<c;b++)a(this.source[b])},empty:function(){var a=this.currentLocation||{start:{}};return new g(a.start.line,a.start.column,this.srcFile)},wrap:function(a){var b=arguments.length<=1||void 0===arguments[1]?this.currentLocation||{start:{}}:arguments[1];return a instanceof g?a:(a=d(a,this,b),new g(b.start.line,b.start.column,this.srcFile,a))},functionCall:function(a,b,c){return c=this.generateList(c),this.wrap([a,b?"."+b+"(":"(",c,")"])},quotedString:function(a){return'"'+(a+"").replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\n/g,"\\n").replace(/\r/g,"\\r").replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029")+'"'},objectLiteral:function(a){var b=[];for(var c in a)if(a.hasOwnProperty(c)){var e=d(a[c],this);"undefined"!==e&&b.push([this.quotedString(c),":",e])}var f=this.generateList(b);return f.prepend("{"),f.add("}"),f},generateList:function(a){for(var b=this.empty(),c=0,e=a.length;c<e;c++)c&&b.add(","),b.add(d(a[c],this));return b},generateArray:function(a){var b=this.generateList(a);return b.prepend("["),b.add("]"),b}},b["default"]=e,a.exports=b["default"]}])});
 
 /***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
-
-/***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(16);
 
 
 /***/ })
