@@ -6,6 +6,7 @@ Light weight and easy to setup.
 
 By [Elkfox](https://www.elkfox.com)
 
+### [Tutorial](https://github.com/Elkfox/cartfox/blob/master/TUTORIAL.md)
 
 ## Installation
 
