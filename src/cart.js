@@ -157,7 +157,7 @@ export class Cart {
     jQuery(itemContainer).html('');
     Handlebars.registerHelper('formatMoney', amount => Handlebars.SafeString(`<span class='money'>
     ${Currency.formatMoney(amount)}</span>`));
-    if (updateCart) { // This will update any cart html if unless updateCart=false
+    if (updateCart) { // This will update any cart html unless updateCart=false
       cart.items.forEach((lineItem) => {
         const itemTemplate = template;
         const renderedTemplate = Handlebars.compile(itemTemplate);
