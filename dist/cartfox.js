@@ -326,7 +326,9 @@ module.exports = jQuery;
 
 var Cart = __webpack_require__(17).Cart;
 
+var VERSION = 2.0;
 module.exports = {
+  VERSION: VERSION,
   Cart: Cart
 };
 
@@ -529,7 +531,7 @@ var Cart = function () {
         return Handlebars.SafeString('<span class=\'money\'>\n    ' + Currency.formatMoney(amount) + '</span>');
       });
       if (_updateCart) {
-        // This will update any cart html if unless updateCart=false
+        // This will update any cart html unless updateCart=false
         cart.items.forEach(function (lineItem) {
           var itemTemplate = template;
           var renderedTemplate = Handlebars.compile(itemTemplate);
