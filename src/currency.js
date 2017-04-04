@@ -14,29 +14,27 @@ const Currency = {
     return dollars + cents;
   },
   formatMoney: (amount, format) => {
-    const moneyFormat = '${{amount}}'
-    if (typeof amount === 'string') {
-      const cents = amount.replace('.', '');
-    }
+    const moneyFormat = '${{amount}}';
+    const cents = typeof amount === 'string' ? amount.replace('.', '') : amount;
     let value = '';
     const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
     const formatString = (format || moneyFormat);
 
     switch (formatString.match(placeholderRegex)[1]) {
       case 'amount':
-        value = this.formatWithDelimiters(cents, 2);
+        value = Currency.formatWithDelimiters(cents, 2);
         break;
       case 'amount_no_decimals':
-        value = this.formatWithDelimiters(cents, 0);
+        value = Currency.formatWithDelimiters(cents, 0);
         break;
       case 'amount_with_comma_separator':
-        value = this.formatWithDelimiters(cents, 1, '.', ',');
+        value = Currency.formatWithDelimiters(cents, 1, '.', ',');
         break;
       case 'amount_no_decimals_with_comma_separator':
-        value = this.formatWithDelimiters(cents, 0, '.', ',');
+        value = Currency.formatWithDelimiters(cents, 0, '.', ',');
         break;
       default:
-        value = this.formatWithDelimiters(cents, 2);
+        value = Currency.formatWithDelimiters(cents, 2);
         break;
     }
     return formatString.replace(placeholderRegex, value);

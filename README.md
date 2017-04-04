@@ -6,6 +6,7 @@ Light weight and easy to setup.
 
 By [Elkfox](https://www.elkfox.com)
 
+### [Tutorial](https://github.com/Elkfox/cartfox/blob/master/TUTORIAL.md)
 
 ## Installation
 
@@ -55,20 +56,6 @@ A number of jQuery events are triggered whenever certain events are compelted.
 | cartfox:cannotAddToCart | ``string`` | Fires whenever the item cannot be added to the cart. Returns the error. |
 | cartfox:requestError | ``string`` | Fires whenever a request inside the queue has failed. Returns the error. |
 | cartfox:cartUpdated | ``object`` | Fires whenever the cart is updated. Returns the cart object. |
-
-
-
-## Adding an empty template popup.
-If you have a cart popup that appears everytime a customer adds an item to the cart then we recommend having what we call an 'empty cart template' set up ready to go. This is done by adding the ``emptyTemplate`` option to the initialisation method. You will also need to include the 'container' for the items in your cart. .e.g. ``#AjaxCart .items``
-~~~~js
-//code above
-var cartfox = new Cartfox.Cart(cart, {
-   ...other Cartfox selectors...,
-   emptyTemplate: '#AjaxCart .hidden-item-template',
-   itemsContainer: '#AjaxCart .items'
-   });
-~~~~
-Now when``updateCart(cart)`` is called (By design whenever ``getCart()`` is called) Cartfox will select the empty template and copy it for each item it needs to add to the cart. If these are not set then 
 
 ## Ajax Cart quantity update.
 If you'd like to have **+** or **-** buttons on either side of your item quantities in your ajax cart then you can include them on either side of your quantity span, paragaph, div, etc. Including the item id inside a data attribute on the quantity makes it easier for the **+** and **-** items to find the item id that they need to update the quantity for. 
