@@ -326,7 +326,7 @@ module.exports = jQuery;
 
 var Cart = __webpack_require__(17).Cart;
 
-var VERSION = 2.0;
+var VERSION = '2.0.1';
 module.exports = {
   VERSION: VERSION,
   Cart: Cart
@@ -523,12 +523,12 @@ var Cart = function () {
 
       this.cart = cart;
       jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-      jQuery(this.selectors.cartTotal).text(Currency.formatMoney(this.cart.total_price));
+      jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price) + '</span>');
       var template = jQuery(this.selectors.emptyTemplate).html();
       var itemContainer = jQuery(this.selectors.itemsContainer);
       jQuery(itemContainer).html('');
       Handlebars.registerHelper('formatMoney', function (amount) {
-        return Handlebars.SafeString('<span class=\'money\'>\n    ' + Currency.formatMoney(amount) + '</span>');
+        return new Handlebars.SafeString('<span class=\'money\'>' + Currency.formatMoney(amount) + '</span>');
       });
       if (_updateCart) {
         // This will update any cart html unless updateCart=false
@@ -664,6 +664,19 @@ var Cart = function () {
     key: 'clearAttributes',
     value: function clearAttributes() {
       this.queue.add('/cart/update.js', Cart.wrapKeys(this.getAttributes(), 'attributes', ''));
+      return this.getCart();
+    }
+  }, {
+    key: 'getNote',
+    value: function getNote() {
+      return this.cart.note;
+    }
+  }, {
+    key: 'setNote',
+    value: function setNote(note) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      this.queue.add('/cart/update.js', { note: note }, options);
       return this.getCart();
     }
   }, {

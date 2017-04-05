@@ -83,44 +83,8 @@ By adding a data attribute ``data-quick-add`` to a button and passing it an item
 By default the quantity that gets added to the cart is 1 but you can overwrite this by adding an extra data attribute ``data-quick-add-quantity`` and assigning it to the number of items you want added to the cart.
 
 
-
-
-
 Classes
 ==
-## Queue
-Class representing a queue
-
-**Kind**: global class  
-
-* [Queue](#Queue)
-    * [new Queue()](#new_Queue_new)
-    * [.add(url, data, options)](#Queue+add)
-    * [.process()](#Queue+process)
-
-### new Queue()
-Build a queue.
-
-### queue.add(url, data, options)
-Add a request to the queue.
-Fires a jQuery event 'cartfox:requestStarted'
-
-**Kind**: instance method of [Queue](#Queue)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| url | ``string`` | Url to make the request to (i.e. '/cart.js') |
-| data | ``object`` | Data to send to the url (i.e. {id: 123453, quantity: 1, properties: {} }) |
-| options | ``object`` | Options for the request. Can include method, success and error functions. |
-
-
-### queue.process()
-Process through the queue. Prevents synchonous callbacks.
-Fires a jQuery event 'cartfox:requestComplete'
-
-**Kind**: instance method of [Queue](#Queue)  
-
----
 
 ## Cartfox
 Class representing the cart
