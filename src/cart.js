@@ -1,5 +1,4 @@
 const Currency = require('./currency.js');
-// const Images = require('./images.js');
 const Handlebars = require('handlebars');
 const Queue = require('./queue').Queue;
 const jQuery = require('jquery');
@@ -47,7 +46,6 @@ export class Cart {
     this.buildSelectors = this.buildSelectors.bind(this);
 
     this.buildSelectors(this.selectors);
-    return this.cart;
   }
   /**
    * Build the event listeners and DOMElement selectors.
@@ -177,6 +175,9 @@ export class Cart {
    * @param {object} properties - The custom properties of the item.
    */
   addItem(id, quantity = 1, properties = {}) {
+    if (id === undefined) {
+      return false;
+    }
     const data = {};
     data.id = id;
     data.quantity = quantity;
@@ -214,13 +215,11 @@ export class Cart {
     return this.getCart();
   }
 
-  updateItemsById(items, options = {}) {
+  updateItemsById(items, options = { success(response) { console.log(response); } }) {
     const data = {
       updates: items,
     };
-    if (items.length > 0) {
-      this.queue.add('/cart/update.js', data, options);
-    }
+    this.queue.add('/cart/update.js', data, options);
     return this.getCart();
   }
 
@@ -269,7 +268,7 @@ export class Cart {
     return this.cart.note;
   }
 
-  setNote(note, options={}) {
+  setNote(note, options = {}) {
     this.queue.add('/cart/update.js', { note }, options);
     return this.getCart();
   }

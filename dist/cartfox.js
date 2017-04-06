@@ -326,7 +326,7 @@ module.exports = jQuery;
 
 var Cart = __webpack_require__(17).Cart;
 
-var VERSION = '2.0.1';
+var VERSION = '2.0.2';
 module.exports = {
   VERSION: VERSION,
   Cart: Cart
@@ -363,7 +363,6 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Currency = __webpack_require__(18);
-// const Images = require('./images.js');
 var Handlebars = __webpack_require__(51);
 var Queue = __webpack_require__(19).Queue;
 var jQuery = __webpack_require__(15);
@@ -416,7 +415,6 @@ var Cart = function () {
     this.buildSelectors = this.buildSelectors.bind(this);
 
     this.buildSelectors(this.selectors);
-    return this.cart;
   }
   /**
    * Build the event listeners and DOMElement selectors.
@@ -558,6 +556,9 @@ var Cart = function () {
       var quantity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var properties = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
+      if (id === undefined) {
+        return false;
+      }
       var data = {};
       data.id = id;
       data.quantity = quantity;
@@ -600,14 +601,16 @@ var Cart = function () {
   }, {
     key: 'updateItemsById',
     value: function updateItemsById(items) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+        success: function success(response) {
+          console.log(response);
+        }
+      };
 
       var data = {
         updates: items
       };
-      if (items.length > 0) {
-        this.queue.add('/cart/update.js', data, options);
-      }
+      this.queue.add('/cart/update.js', data, options);
       return this.getCart();
     }
 
@@ -829,6 +832,10 @@ var Queue = exports.Queue = function () {
             } catch (e) {
               console.log('No document');
             }
+          },
+          400: function _(err) {
+            jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
+            console.log(err);
           }
         },
         success: [options.success],

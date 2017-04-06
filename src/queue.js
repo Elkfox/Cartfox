@@ -37,6 +37,10 @@ export class Queue {
             console.log('No document');
           }
         },
+        400: (err) => {
+          jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
+          console.log(err);
+        },
       },
       success: [options.success],
       error: (error) => { jQuery(document).trigger('cartfox:requestError', [error]); },
