@@ -787,7 +787,7 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var jQuery = __webpack_require__(15);
+var jquery = __webpack_require__(15);
 /** Class representing a queue */
 
 var Queue = exports.Queue = function () {
@@ -816,7 +816,9 @@ var Queue = exports.Queue = function () {
 
   (0, _createClass3.default)(Queue, [{
     key: 'add',
-    value: function add(url, data, options) {
+    value: function add(url, data) {
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
       var request = {
         url: url,
         data: data,
@@ -856,7 +858,9 @@ var Queue = exports.Queue = function () {
       } catch (e) {
         console.log('No document');
       }
-      return this.process();
+      this.processing = false;
+      this.process();
+      return this.processing;
     }
 
     /**

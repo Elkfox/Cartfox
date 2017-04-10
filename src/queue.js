@@ -1,4 +1,4 @@
-const jQuery = require('jquery');
+const jquery = require('jquery');
 /** Class representing a queue */
 export class Queue {
   /**
@@ -20,7 +20,7 @@ export class Queue {
    * Can include method, success and error functions.
    * @return this.process() - begins processing the queue.
    */
-  add(url, data, options) {
+  add(url, data, options = {}) {
     const request = {
       url,
       data,
@@ -58,7 +58,9 @@ export class Queue {
     } catch (e) {
       console.log('No document');
     }
-    return this.process();
+    this.processing = false;
+    this.process();
+    return this.processing;
   }
 
   /**
