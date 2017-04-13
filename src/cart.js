@@ -3,6 +3,8 @@ const Handlebars = require('handlebars');
 const Queue = require('./queue').Queue;
 const jQuery = require('jquery');
 
+window.Currency = window.Currency || {};
+
 /** Class representing a cart */
 export class Cart {
   /**
@@ -148,12 +150,19 @@ export class Cart {
    */
   updateCart(cart, updateCart = true) {
     this.cart = cart;
-    jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-    jQuery(this.selectors.cartTotal).html(`<span class="money">${Currency.formatMoney(this.cart.total_price)}</span>`);
     const template = jQuery(this.selectors.emptyTemplate).html();
     const itemContainer = jQuery(this.selectors.itemsContainer);
     jQuery(itemContainer).html('');
-    Handlebars.registerHelper('formatMoney', amount => new Handlebars.SafeString(`<span class='money'>${Currency.formatMoney(amount)}</span>`));
+    let moneyFormat = '{{amount}}';
+    if (window.Currency.format) {
+      if (window.Currency.moneyFormats) {
+        const format = window.Currency.format;
+        moneyFormat = window.Currency.moneyFormats[window.Currency.currentCurrency][format];
+      }
+    }
+    jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
+    jQuery(this.selectors.cartTotal).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
+    Handlebars.registerHelper('formatMoney', amount => new Handlebars.SafeString(`<span class='money'>${Currency.formatMoney(amount, moneyFormat)}</span>`));
     if (updateCart) { // This will update any cart html unless updateCart=false
       cart.items.forEach((lineItem) => {
         const itemTemplate = template;

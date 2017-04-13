@@ -367,6 +367,8 @@ var Handlebars = __webpack_require__(51);
 var Queue = __webpack_require__(19).Queue;
 var jQuery = __webpack_require__(15);
 
+window.Currency = window.Currency || {};
+
 /** Class representing a cart */
 
 var Cart = function () {
@@ -520,13 +522,20 @@ var Cart = function () {
       var _updateCart = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
       this.cart = cart;
-      jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-      jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price) + '</span>');
       var template = jQuery(this.selectors.emptyTemplate).html();
       var itemContainer = jQuery(this.selectors.itemsContainer);
       jQuery(itemContainer).html('');
+      var moneyFormat = '{{amount}}';
+      if (window.Currency.format) {
+        if (window.Currency.moneyFormats) {
+          var format = window.Currency.format;
+          moneyFormat = window.Currency.moneyFormats[window.Currency.currentCurrency][format];
+        }
+      }
+      jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
+      jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
       Handlebars.registerHelper('formatMoney', function (amount) {
-        return new Handlebars.SafeString('<span class=\'money\'>' + Currency.formatMoney(amount) + '</span>');
+        return new Handlebars.SafeString('<span class=\'money\'>' + Currency.formatMoney(amount, moneyFormat) + '</span>');
       });
       if (_updateCart) {
         // This will update any cart html unless updateCart=false
