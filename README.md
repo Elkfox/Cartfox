@@ -17,6 +17,9 @@ These include the jQuery libray for internal use so you don't have to.
 
 Include the script in the head of your ``theme.liquid`` file using ``{% 'cartfox.js' | asset_url | script_tag %}``
 
+### Requirements
+  [Handlebars](http://handlebarsjs.com/)
+
 ## Initialization
 Note: This is the bare minimum required to get Cartfox going.
 ~~~~js

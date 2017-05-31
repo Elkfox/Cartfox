@@ -23,7 +23,7 @@ export class Cart {
    * @param {object} selectors - The selectors to update information and for events to listen to.
    */
 
-  constructor(cart = {}, selectors) {
+  constructor(cart = {}, selectors, options) {
     this.queue = new Queue();
     this.cart = cart;
     this.selectors = Object.assign({}, {
@@ -39,6 +39,10 @@ export class Cart {
       emptyTemplate: '#CartTemplate',
       itemsContainer: '#PopupCart .items',
     }, selectors);
+
+    this.options = Object.assign({}, {
+      'moneyFormat': '{{amount}}',
+    }, options);
 
     //  Non Data API keys
     this.addItem = this.addItem.bind(this);

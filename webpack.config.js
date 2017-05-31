@@ -16,11 +16,6 @@ const config = {
       },
     ],
   },
-  resolve: {
-    alias: {
-      handlebars: 'handlebars/dist/handlebars.min.js',
-    },
-  },
 };
 
 const unCompressed = Object.assign({}, config, {
@@ -33,7 +28,8 @@ const unCompressed = Object.assign({}, config, {
   externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
-    'jquery': 'jQuery',
+    jquery: 'jQuery',
+    handlebars: 'Handlebars',
   },
 
   plugins: [
@@ -52,6 +48,7 @@ const minified = Object.assign({}, config, {
     // require("jquery") is external and available
     //  on the global var jQuery
     jquery: 'jQuery',
+    handlebars: 'Handlebars',
   },
 
   plugins: [
