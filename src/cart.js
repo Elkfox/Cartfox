@@ -6,7 +6,7 @@ const jQuery = require('jquery');
 window.Currency = window.Currency || {};
 
 /** Class representing a cart */
-export class Cart {
+export default class Cart {
   /**
    * Build a new cart. Also creates a new queue.
    * Default selectors are:
@@ -69,7 +69,7 @@ export class Cart {
       if (jQuery('input[name*=properties]').length > 0) {
         properties = {};
 
-        jQuery('input[name*=properties]').each(() => {
+        jQuery('input[name*=properties]').each(function property() {
           const key = jQuery(this).attr('name').split('[')[1].split(']')[0];
           const value = jQuery(this).val();
           properties[key] = value;
@@ -128,7 +128,11 @@ export class Cart {
     Object.keys(obj).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const value = obj[key];
-        wrapped[`${type}[${key}]`] = defaultValue === null ? value : defaultValue;
+        if (type === 'properties') {
+          wrapped[`${key}`] = defaultValue === null ? value : defaultValue;
+        } else {
+          wrapped[`${type}[${key}]`] = defaultValue === null ? value : defaultValue;
+        }
       }
     });
     return wrapped;

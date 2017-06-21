@@ -342,7 +342,6 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Cart = undefined;
 
 var _keys = __webpack_require__(22);
 
@@ -436,8 +435,6 @@ var Cart = function () {
        * addItem - Event listener for when the additem event is triggered
        */
       function add(e) {
-        var _this = this;
-
         e.preventDefault();
         var id = jQuery('select[name=id]').val();
         var quantity = Number(jQuery('input[name=quantity]').val());
@@ -445,9 +442,9 @@ var Cart = function () {
         if (jQuery('input[name*=properties]').length > 0) {
           properties = {};
 
-          jQuery('input[name*=properties]').each(function () {
-            var key = jQuery(_this).attr('name').split('[')[1].split(']')[0];
-            var value = jQuery(_this).val();
+          jQuery('input[name*=properties]').each(function property() {
+            var key = jQuery(this).attr('name').split('[')[1].split(']')[0];
+            var value = jQuery(this).val();
             properties[key] = value;
           });
         }
@@ -712,7 +709,11 @@ var Cart = function () {
       (0, _keys2.default)(obj).forEach(function (key) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
           var value = obj[key];
-          wrapped[type + '[' + key + ']'] = defaultValue === null ? value : defaultValue;
+          if (type === 'properties') {
+            wrapped['' + key] = defaultValue === null ? value : defaultValue;
+          } else {
+            wrapped[type + '[' + key + ']'] = defaultValue === null ? value : defaultValue;
+          }
         }
       });
       return wrapped;
@@ -721,7 +722,7 @@ var Cart = function () {
   return Cart;
 }();
 
-exports.Cart = Cart;
+exports.default = Cart;
 
 /***/ }),
 /* 18 */
