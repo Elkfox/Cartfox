@@ -1,4 +1,4 @@
-const Cart = require('./cart');
+const Cart = require('./cart').Cart;
 
 const VERSION = '2.0.5';
 module.exports = {

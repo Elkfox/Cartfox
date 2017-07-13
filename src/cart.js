@@ -6,7 +6,7 @@ const jQuery = require('jquery');
 window.Currency = window.Currency || {};
 
 /** Class representing a cart */
-export default class Cart {
+export class Cart {
   /**
    * Build a new cart. Also creates a new queue.
    * Default selectors are:
