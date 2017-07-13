@@ -324,7 +324,7 @@ module.exports = jQuery;
 "use strict";
 
 
-var Cart = __webpack_require__(17).Cart;
+var Cart = __webpack_require__(17);
 
 var VERSION = '2.0.5';
 module.exports = {
