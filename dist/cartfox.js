@@ -573,7 +573,7 @@ var Cart = function () {
       var data = {};
       data.id = id;
       data.quantity = quantity;
-      if (properties === {}) {
+      if (properties !== {}) {
         data.properties = Cart.wrapKeys(properties);
       }
       this.queue.add('/cart/add.js', data, {});
@@ -702,14 +702,14 @@ var Cart = function () {
   }], [{
     key: 'wrapKeys',
     value: function wrapKeys(obj) {
-      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'properties';
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var defaultValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
       var wrapped = {};
       (0, _keys2.default)(obj).forEach(function (key) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
           var value = obj[key];
-          if (type === 'properties') {
+          if (type === null) {
             wrapped['' + key] = defaultValue === null ? value : defaultValue;
           } else {
             wrapped[type + '[' + key + ']'] = defaultValue === null ? value : defaultValue;

@@ -123,12 +123,12 @@ export default class Cart {
     }
   }
 
-  static wrapKeys(obj, type = 'properties', defaultValue = null) {
+  static wrapKeys(obj, type = null, defaultValue = null) {
     const wrapped = {};
     Object.keys(obj).forEach((key) => {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const value = obj[key];
-        if (type === 'properties') {
+        if (type === null) {
           wrapped[`${key}`] = defaultValue === null ? value : defaultValue;
         } else {
           wrapped[`${type}[${key}]`] = defaultValue === null ? value : defaultValue;
@@ -198,7 +198,7 @@ export default class Cart {
     const data = {};
     data.id = id;
     data.quantity = quantity;
-    if (properties === {}) {
+    if (properties !== {}) {
       data.properties = Cart.wrapKeys(properties);
     }
     this.queue.add('/cart/add.js', data, {});
