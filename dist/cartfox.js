@@ -503,9 +503,11 @@ var Cart = function () {
      * Get the cart
      */
     value: function getCart() {
+      var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
       var options = {
         updateCart: true,
-        success: this.updateCart,
+        success: callback || this.updateCart,
         type: 'GET'
       };
       this.queue.add('/cart.js', {}, options);

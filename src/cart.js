@@ -141,10 +141,10 @@ export default class Cart {
   /**
    * Get the cart
    */
-  getCart() {
+  getCart(callback = null) {
     const options = {
       updateCart: true,
-      success: this.updateCart,
+      success: callback || this.updateCart,
       type: 'GET',
     };
     this.queue.add('/cart.js', {}, options);
