@@ -65,9 +65,8 @@ export class Cart {
       e.preventDefault();
       const id = jQuery('select[name=id]').val();
       const quantity = Number(jQuery('input[name=quantity]').val());
-      let properties = null;
+      const properties = {};
       if (jQuery('input[name*=properties]').length > 0) {
-        properties = {};
 
         jQuery('input[name*=properties]').each(function property() {
           const key = jQuery(this).attr('name').split('[')[1].split(']')[0];

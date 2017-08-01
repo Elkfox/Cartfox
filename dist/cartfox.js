@@ -439,9 +439,8 @@ var Cart = function () {
         e.preventDefault();
         var id = jQuery('select[name=id]').val();
         var quantity = Number(jQuery('input[name=quantity]').val());
-        var properties = null;
+        var properties = {};
         if (jQuery('input[name*=properties]').length > 0) {
-          properties = {};
 
           jQuery('input[name*=properties]').each(function property() {
             var key = jQuery(this).attr('name').split('[')[1].split(']')[0];
