@@ -59,6 +59,7 @@ A number of jQuery events are triggered whenever certain events are compelted.
 | cartfox:cannotAddToCart | ``string`` | Fires whenever the item cannot be added to the cart. Returns the error. |
 | cartfox:requestError | ``string`` | Fires whenever a request inside the queue has failed. Returns the error. |
 | cartfox:cartUpdated | ``object`` | Fires whenever the cart is updated. Returns the cart object. |
+| cartfox:itemAdded | ``object`` | Fires when an item has been successfully added to the cart. Returns the json for the item that has been added. |
 
 ## Ajax Cart quantity update.
 If you'd like to have **+** or **-** buttons on either side of your item quantities in your ajax cart then you can include them on either side of your quantity span, paragaph, div, etc. Including the item id inside a data attribute on the quantity makes it easier for the **+** and **-** items to find the item id that they need to update the quantity for. 
