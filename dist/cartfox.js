@@ -406,8 +406,8 @@ var Cart = function () {
       addItem: '.addItem',
       removeItem: '.removeItem',
       updateItem: '.updateItem',
-      emptyTemplate: '#CartTemplate',
-      itemsContainer: '#PopupCart .items'
+      emptyTemplate: '',
+      itemsContainer: ''
     }, selectors);
 
     this.options = (0, _assign2.default)({}, {
@@ -527,9 +527,6 @@ var Cart = function () {
       var _updateCart = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
       this.cart = cart;
-      var template = jQuery(this.selectors.emptyTemplate).html();
-      var itemContainer = jQuery(this.selectors.itemsContainer);
-      jQuery(itemContainer).html('');
       var moneyFormat = '{{amount}}';
       if (window.Currency.format) {
         if (window.Currency.moneyFormats) {
@@ -537,6 +534,15 @@ var Cart = function () {
           moneyFormat = window.Currency.moneyFormats[window.Currency.currentCurrency][format];
         }
       }
+      if (!this.selectors.emptyTemplate) {
+        jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
+        jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
+        jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
+        return true;
+      }
+      var template = jQuery(this.selectors.emptyTemplate).html();
+      var itemContainer = jQuery(this.selectors.itemsContainer);
+      jQuery(itemContainer).html('');
       jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
       jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
       Handlebars.registerHelper('formatMoney', function (amount) {
@@ -554,6 +560,7 @@ var Cart = function () {
       }
       Handlebars.unregisterHelper('formatMoney');
       jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
+      return true;
     }
     /**
      * Add an item to the cart. Fired when the selector for addItem is fired.

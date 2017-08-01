@@ -36,8 +36,8 @@ export class Cart {
       addItem: '.addItem',
       removeItem: '.removeItem',
       updateItem: '.updateItem',
-      emptyTemplate: '#CartTemplate',
-      itemsContainer: '#PopupCart .items',
+      emptyTemplate: '',
+      itemsContainer: '',
     }, selectors);
 
     this.options = Object.assign({}, {
@@ -158,9 +158,6 @@ export class Cart {
    */
   updateCart(cart, updateCart = true) {
     this.cart = cart;
-    const template = jQuery(this.selectors.emptyTemplate).html();
-    const itemContainer = jQuery(this.selectors.itemsContainer);
-    jQuery(itemContainer).html('');
     let moneyFormat = '{{amount}}';
     if (window.Currency.format) {
       if (window.Currency.moneyFormats) {
@@ -168,6 +165,15 @@ export class Cart {
         moneyFormat = window.Currency.moneyFormats[window.Currency.currentCurrency][format];
       }
     }
+    if (!this.selectors.emptyTemplate) {
+      jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
+      jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
+      jQuery(this.selectors.cartTotal).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
+      return true;
+    }
+    const template = jQuery(this.selectors.emptyTemplate).html();
+    const itemContainer = jQuery(this.selectors.itemsContainer);
+    jQuery(itemContainer).html('');
     jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
     jQuery(this.selectors.cartTotal).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
     Handlebars.registerHelper('formatMoney', amount => new Handlebars.SafeString(`<span class='money'>${Currency.formatMoney(amount, moneyFormat)}</span>`));
@@ -182,6 +188,7 @@ export class Cart {
     }
     Handlebars.unregisterHelper('formatMoney');
     jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
+    return true;
   }
   /**
    * Add an item to the cart. Fired when the selector for addItem is fired.
