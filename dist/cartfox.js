@@ -586,7 +586,9 @@ var Cart = function () {
       if (properties !== {}) {
         data.properties = Cart.wrapKeys(properties);
       }
-      this.queue.add('/cart/add.js', data, {});
+      this.queue.add('/cart/add.js', data, { success: function success(lineItem) {
+          return jQuery(document).trigger('cartfox:itemAdded', [lineItem]);
+        } });
 
       return this.getCart();
     }
@@ -842,6 +844,8 @@ var Queue = exports.Queue = function () {
   (0, _createClass3.default)(Queue, [{
     key: 'add',
     value: function add(url, data) {
+      var _this = this;
+
       var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
       var request = {
@@ -854,20 +858,17 @@ var Queue = exports.Queue = function () {
             /**
              * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
              */
-            try {
-              jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-            } catch (e) {
-              console.log('No document');
-            }
+            jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
+            _this.processing = false;
           },
           400: function _(err) {
+            _this.processing = false;
             jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-            console.log(err);
           }
         },
         success: [options.success],
         error: function error(_error) {
-          jQuery(document).trigger('cartfox:requestError', [_error]);
+          console.log(_error);jQuery(document).trigger('cartfox:requestError', [_error]);
         },
         complete: [options.complete]
       };

@@ -31,19 +31,16 @@ export class Queue {
           /**
            * In case you cannot add the item to the cart this function fires cartfox:cannotAddToCart
            */
-          try {
-            jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-          } catch (e) {
-            console.log('No document');
-          }
+          jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
+          this.processing = false;
         },
         400: (err) => {
+          this.processing = false;
           jQuery(document).trigger('cartfox:cannotAddToCart', [err]);
-          console.log(err);
         },
       },
       success: [options.success],
-      error: (error) => { jQuery(document).trigger('cartfox:requestError', [error]); },
+      error: (error) => { console.log(error); jQuery(document).trigger('cartfox:requestError', [error]); },
       complete: [options.complete],
     };
     // let request = {};

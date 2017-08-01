@@ -208,7 +208,7 @@ export class Cart {
     if (properties !== {}) {
       data.properties = Cart.wrapKeys(properties);
     }
-    this.queue.add('/cart/add.js', data, {});
+    this.queue.add('/cart/add.js', data, { success: lineItem =>  jQuery(document).trigger('cartfox:itemAdded', [lineItem]) });
 
     return this.getCart();
   }
