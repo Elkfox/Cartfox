@@ -53,6 +53,7 @@ export class Cart {
 
     this.buildSelectors(this.selectors);
   }
+
   /**
    * Build the event listeners and DOMElement selectors.
    * @param {object} selectors - An object that includes all the selectors to use.
@@ -67,7 +68,6 @@ export class Cart {
       const quantity = Number(jQuery('input[name=quantity]').val());
       const properties = {};
       if (jQuery('input[name*=properties]').length > 0) {
-
         jQuery('input[name*=properties]').each(function property() {
           const key = jQuery(this).attr('name').split('[')[1].split(']')[0];
           const value = jQuery(this).val();

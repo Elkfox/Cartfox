@@ -17,7 +17,7 @@ const Images = {
       return this.removeProtocol(`${prefix[0]}_${size}${suffix}`);
     }
 
-    return null;
+    return this.removeProtocol(src);
   },
 
   removeProtocol: url => url.replace(/http(s)?:/, ''),

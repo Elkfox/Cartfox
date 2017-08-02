@@ -326,7 +326,7 @@ module.exports = jQuery;
 
 var Cart = __webpack_require__(17).Cart;
 
-var VERSION = '2.0.5';
+var VERSION = '2.0.7';
 module.exports = {
   VERSION: VERSION,
   Cart: Cart
@@ -423,6 +423,7 @@ var Cart = function () {
 
     this.buildSelectors(this.selectors);
   }
+
   /**
    * Build the event listeners and DOMElement selectors.
    * @param {object} selectors - An object that includes all the selectors to use.
@@ -441,7 +442,6 @@ var Cart = function () {
         var quantity = Number(jQuery('input[name=quantity]').val());
         var properties = {};
         if (jQuery('input[name*=properties]').length > 0) {
-
           jQuery('input[name*=properties]').each(function property() {
             var key = jQuery(this).attr('name').split('[')[1].split(']')[0];
             var value = jQuery(this).val();
