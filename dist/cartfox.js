@@ -559,6 +559,9 @@ var Cart = function () {
       }
       Handlebars.unregisterHelper('formatMoney');
       jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
+      if (window.Shopify && Shopify.StorefrontExpressButtons) {
+        Shopify.StorefrontExpressButtons.initialize();
+      }
       return true;
     }
     /**
