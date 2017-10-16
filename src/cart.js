@@ -15,6 +15,9 @@ export class Cart {
    * cartTotal: ".cartTotal",
    * decreaseQuantity: "#minusOne",
    * increaseQuantity: "#plusOne",
+   * itemQuantity: ".item-qty",
+   * staticQuantity: '.quantity',
+   * staticChangeQuantity: '.adjust',
    * addItem: '.addItem',
    * removeItem: '.removeItem',
    * updateItem: '.updateItem'
@@ -33,6 +36,8 @@ export class Cart {
       decreaseQuantity: '#minusOne',
       increaseQuantity: '#plusOne',
       itemQuantity: '.item-qty',
+      staticQuantity: '.quantity',
+      staticChangeQuantity: '.adjust',
       addItem: '.addItem',
       removeItem: '.removeItem',
       updateItem: '.updateItem',
@@ -110,6 +115,19 @@ export class Cart {
     function update(e) {
       e.preventDefault();
     }
+
+    function staticChange(e) {
+      e.preventDefault();
+      var $this = jQuery(this);
+      var $qtyInput = $this.siblings(selectors.staticQuantity);
+      var change = Number($this.data('change'));
+      var min = Number($qtyInput.attr('min'))
+      var newQty = Number($qtyInput.val()) + change;
+      if (newQty >= min) {
+        $qtyInput.val(newQty);
+      }
+    }
+
     try {
       jQuery(document).on('click', selectors.addItem, add.bind(this));
       jQuery(document).on('click', selectors.updateItem, { cart: this }, update);
