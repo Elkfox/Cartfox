@@ -205,13 +205,17 @@ export class Cart {
     });
     Handlebars.registerHelper('formatMoney', amount => new Handlebars.SafeString(`<span class='money'>${Currency.formatMoney(amount, moneyFormat)}</span>`));
     if (updateCart) { // This will update any cart html unless updateCart=false
-      cart.items.forEach((lineItem) => {
-        const itemTemplate = template;
-        const renderedTemplate = Handlebars.compile(itemTemplate);
-        renderedTemplate({ lineItem });
-        const renderedHTML = renderedTemplate({ lineItem });
-        jQuery(itemContainer).append(renderedHTML);
-      });
+      if (cart.items.length) {
+        cart.items.forEach((lineItem) => {
+          const itemTemplate = template;
+          const renderedTemplate = Handlebars.compile(itemTemplate);
+          renderedTemplate({ lineItem });
+          const renderedHTML = renderedTemplate({ lineItem });
+          jQuery(itemContainer).append(renderedHTML);
+        });
+      } else {
+        jQuery(itemContainer).append('<p>Your cart is empty!</p>');
+      }
     }
     Handlebars.unregisterHelper('formatMoney');
     jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
@@ -238,8 +242,9 @@ export class Cart {
     if (properties !== {}) {
       data.properties = Cart.wrapKeys(properties);
     }
-    this.queue.add('/cart/add.js', data, { success: lineItem =>  jQuery(document).trigger('cartfox:itemAdded', [lineItem]) });
-
+    this.queue.add('/cart/add.js', data, {
+      success: lineItem => jQuery(document).trigger('cartfox:itemAdded', [lineItem])
+    });
     return this.getCart();
   }
 

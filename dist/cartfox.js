@@ -593,13 +593,17 @@ var Cart = function () {
       });
       if (_updateCart) {
         // This will update any cart html unless updateCart=false
-        cart.items.forEach(function (lineItem) {
-          var itemTemplate = template;
-          var renderedTemplate = Handlebars.compile(itemTemplate);
-          renderedTemplate({ lineItem: lineItem });
-          var renderedHTML = renderedTemplate({ lineItem: lineItem });
-          jQuery(itemContainer).append(renderedHTML);
-        });
+        if (cart.items.length) {
+          cart.items.forEach(function (lineItem) {
+            var itemTemplate = template;
+            var renderedTemplate = Handlebars.compile(itemTemplate);
+            renderedTemplate({ lineItem: lineItem });
+            var renderedHTML = renderedTemplate({ lineItem: lineItem });
+            jQuery(itemContainer).append(renderedHTML);
+          });
+        } else {
+          jQuery(itemContainer).append('<p>Your cart is empty!</p>');
+        }
       }
       Handlebars.unregisterHelper('formatMoney');
       jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
@@ -632,10 +636,11 @@ var Cart = function () {
       if (properties !== {}) {
         data.properties = Cart.wrapKeys(properties);
       }
-      this.queue.add('/cart/add.js', data, { success: function success(lineItem) {
+      this.queue.add('/cart/add.js', data, {
+        success: function success(lineItem) {
           return jQuery(document).trigger('cartfox:itemAdded', [lineItem]);
-        } });
-
+        }
+      });
       return this.getCart();
     }
   }, {
