@@ -392,16 +392,18 @@ var Cart = function () {
    * Build a new cart. Also creates a new queue.
    * Default selectors are:
    * cart: '.cart',
-   * cartItemCount: "#CartItemCount",
-   * cartTotal: ".cartTotal",
+   * cartItemCount: "[data-cart-item-count]",
+   * cartTotal: "[data-cart-total]",
    * decreaseQuantity: "#minusOne",
    * increaseQuantity: "#plusOne",
-   * itemQuantity: ".item-qty",
+   * itemQuantity: "[data-item-quantity]",
    * staticQuantity: '.quantity',
    * staticChangeQuantity: '.adjust',
    * addItem: '.addItem',
-   * removeItem: '.removeItem',
+   * removeItem: '[data-remove-item]',
    * updateItem: '.updateItem'
+   * emptyTemplate: '[data-cart-template]'
+   * itemsContainer: '[data-item-container]'
    * @param {object} cart - The json of the cart for the initial data. Can be set using liquid tags
    * with the json filter. {{ cart | json }}
    * @param {object} selectors - The selectors to update information and for events to listen to.
@@ -417,18 +419,18 @@ var Cart = function () {
     this.cart = cart;
     this.selectors = (0, _assign2.default)({}, {
       cart: '.cart',
-      cartItemCount: '#CartItemCount',
-      cartTotal: '.cartTotal',
-      decreaseQuantity: '#minusOne',
-      increaseQuantity: '#plusOne',
-      itemQuantity: '.item-qty',
+      cartItemCount: '[data-cart-item-count]',
+      cartTotal: '[data-cart-total]',
+      decreaseQuantity: '[data-minus-one]',
+      increaseQuantity: '[data-plus-one]',
+      itemQuantity: '[data-item-quantity]',
       staticQuantity: '.quantity',
       staticChangeQuantity: '.adjust',
-      addItem: '.addItem',
-      removeItem: '.removeItem',
+      addItem: '[data-add-to-cart]',
+      removeItem: '[data-remove-item]',
       updateItem: '.updateItem',
-      emptyTemplate: '',
-      itemsContainer: ''
+      emptyTemplate: '[data-cart-template]',
+      itemsContainer: '[data-item-container]'
     }, selectors);
 
     this.options = (0, _assign2.default)({}, {
