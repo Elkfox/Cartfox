@@ -186,15 +186,23 @@ export class Cart {
     }
     if (!this.selectors.emptyTemplate) {
       jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
-      jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-      jQuery(this.selectors.cartTotal).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
+      jQuery(this.selectors.cartItemCount).each(function(index, element) {
+        jQuery(element).text(this.cart.item_count);
+      });
+      jQuery(this.selectors.cartTotal).each(function(index, element) {
+        jQuery(element).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
+      });
       return true;
     }
     const template = jQuery(this.selectors.emptyTemplate).html();
     const itemContainer = jQuery(this.selectors.itemsContainer);
     jQuery(itemContainer).html('');
-    jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-    jQuery(this.selectors.cartTotal).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
+    jQuery(this.selectors.cartItemCount).each(function(index, element) {
+      jQuery(element).text(this.cart.item_count);
+    });
+    jQuery(this.selectors.cartTotal).each(function(index, element) {
+      jQuery(element).html(`<span class="money">${Currency.formatMoney(this.cart.total_price, moneyFormat)}</span>`);
+    });
     Handlebars.registerHelper('formatMoney', amount => new Handlebars.SafeString(`<span class='money'>${Currency.formatMoney(amount, moneyFormat)}</span>`));
     if (updateCart) { // This will update any cart html unless updateCart=false
       cart.items.forEach((lineItem) => {

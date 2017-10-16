@@ -571,15 +571,23 @@ var Cart = function () {
       }
       if (!this.selectors.emptyTemplate) {
         jQuery(document).trigger('cartfox:cartUpdated', [this.cart]);
-        jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-        jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
+        jQuery(this.selectors.cartItemCount).each(function (index, element) {
+          jQuery(element).text(this.cart.item_count);
+        });
+        jQuery(this.selectors.cartTotal).each(function (index, element) {
+          jQuery(element).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
+        });
         return true;
       }
       var template = jQuery(this.selectors.emptyTemplate).html();
       var itemContainer = jQuery(this.selectors.itemsContainer);
       jQuery(itemContainer).html('');
-      jQuery(this.selectors.cartItemCount).text(this.cart.item_count);
-      jQuery(this.selectors.cartTotal).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
+      jQuery(this.selectors.cartItemCount).each(function (index, element) {
+        jQuery(element).text(this.cart.item_count);
+      });
+      jQuery(this.selectors.cartTotal).each(function (index, element) {
+        jQuery(element).html('<span class="money">' + Currency.formatMoney(this.cart.total_price, moneyFormat) + '</span>');
+      });
       Handlebars.registerHelper('formatMoney', function (amount) {
         return new Handlebars.SafeString('<span class=\'money\'>' + Currency.formatMoney(amount, moneyFormat) + '</span>');
       });
