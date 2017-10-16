@@ -98,7 +98,9 @@ export class Cart {
       e.preventDefault();
       const itemId = Number(jQuery(this).data('quick-add'));
       const qty = Number(jQuery(this).data('quick-add-qty')) || 1;
-      e.data.cart.addItem(itemId, qty);
+      var properties = jQuery(this).data('quick-add-properties');
+
+      e.data.cart.addItem(itemId, qty, properties);
     }
 
     function increaseQuantity(e) {
