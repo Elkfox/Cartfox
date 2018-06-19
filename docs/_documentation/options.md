@@ -14,6 +14,8 @@ You may wish to configure your Focus element with some settings that are differe
   });
 {% endhighlight %}
 
+#### Table of Options
+
 | Option | Default | Type | Description |
 | :----- | :------- | ----------- |
 | bodyClass | `active-popup` | string | Class name applied to the body when the Focus element is opened. |

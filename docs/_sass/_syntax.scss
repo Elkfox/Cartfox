@@ -33,8 +33,8 @@
  * Styles
  */
 code.highlighter-rouge {
-  font-family: Menlo, monospace;
-  font-weight: 900;
+  font-family: $markupFontFamily;
+  font-weight: 700;
   color: $colorEight;
   display: inline;
 }
@@ -46,8 +46,8 @@ code.highlighter-rouge {
     @include prefixer(transform,  translateY(-200%), webkit moz ms spec);
     color: $colorEight;
     text-transform: uppercase;
-    font-family: Menlo, monospace;
-    font-weight: 900;
+    font-family: $markupFontFamily;
+    font-weight: 700;
     font-size: 0.95rem;
   }
 }
@@ -66,8 +66,8 @@ code.highlighter-rouge {
   pre {
     white-space: pre-wrap;
   }
-  font-family: Menlo, monospace;
-  font-weight: 800;
+  font-family: $markupFontFamily;
+  font-weight: 700;
   color: $colorLightGray;
   padding-top: $gutter;
   margin-bottom: $gutter;

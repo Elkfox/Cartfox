@@ -1,6 +1,6 @@
 # Meta =======================================================================
-title: Cartfox - A lightweight, powerful wrapper for the Shopify ajax cart API
-description: A lightweight, powerful wrapper for the Shopify ajax cart API
+title: Cartfox - A lightweight, powerful wrapper for the Shopify AJAX cart API
+description: A lightweight, powerful wrapper for the Shopify AJAX cart API
 # Site =======================================================================
 name: Cartfox
 subtitle: Shopify carts on steriods
@@ -15,14 +15,14 @@ nav:
     url: '#features'
   - title: Getting Started
     url: '#getting-started'
-  - title: 'Javascript'
-    url: '#javascript'
   - title: 'Options'
     url: '#options'
-  - title: 'jQuery Events'
-    url: '#jquery-events'
-  - title: Styles
-    url: '#css'
+  - title: 'Data API'
+    url: '#data-api'
+  - title: 'Events'
+    url: '#events'
+  - title: 'Templating'
+    url: '#templating'
 
 # Collections ================================================================
 collections:

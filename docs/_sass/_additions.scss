@@ -128,7 +128,7 @@ article.documentation {
   background-color: $colorBackground;
   bottom: 0;
   @include l() {
-    bottom: $gutter;
+    padding-bottom: $gutter;
   }
   left: 0px;
   padding-left: $gutter;
@@ -151,23 +151,7 @@ article.documentation {
     fill: $colorText;
   }
 }
-.demo-wrapper {
-  margin-bottom: $gutter;
-}
-.demo-grid {
-  background-color: rgba(0,0,0,0.2);
-  border-style: solid;
-  border-width: 1px;
-  border-color: $colorEight;
-  font-family: Menlo, monospace;
-  font-weight: 900;
-  .demo-grid {
-    border-color: $colorOne;
-    .demo-grid {
-      border-color: $colorThree;
-    }
-  }
-}
+
 // Overrides
 .icon {
   line-height: 1;

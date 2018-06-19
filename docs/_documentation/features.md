@@ -3,5 +3,6 @@ title:  "Features"
 handle: "features"
 category: "features"
 ---
- - Under 1 KB
+ - Under 10 KB
+ - Easy to use data API
  - jQuery events

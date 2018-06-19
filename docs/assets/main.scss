@@ -11,22 +11,22 @@ $colorLightGray: #f8f8f2;
 $colorGray: #44475a;
 $colorDarkGray: #192A32;
 
-$colorPink: #b08cff;
-$colorPurple: #854AA0;
-$colorCyan: #2DB7EF;
+$colorPink: #98C892;
+$colorPurple: #C294C7;
+$colorCyan: #56AEF9;
 $colorBlue: #6272a4;
-$colorYellow: #E7DC64;
+$colorYellow: #E9DB3C;
 $colorGreen: #5FE1C2;
 $colorOrange: #FFA120;
-$colorRed: #FE5252;
+$colorRed: #ED5F64;
 
 // Variables in use
 $colorOne: $colorOrange;
 $colorTwo: $colorGreen;
-$colorThree: $colorYellow;
-$colorFour: $colorPurple;
+$colorThree: $colorPink;
+$colorFour: $colorYellow;
 $colorFive: $colorBlue;
-$colorSix: $colorPink;
+$colorSix: $colorPurple;
 $colorSeven: $colorRed;
 $colorEight: $colorCyan;
 
@@ -40,8 +40,9 @@ $fontRegular: 400;
 $fontBold: 600;
 $lineHeight: 1.75;
 
-$bodyFontFamily: 'Oxygen', Helvetica, Arial, sans-serif;
-$headingFontFamily: 'Oxygen', Helvetica, Arial, sans-serif;
+$bodyFontFamily: 'Cabin', Helvetica, Arial, sans-serif;
+$headingFontFamily: 'Cabin', Helvetica, Arial, sans-serif;
+$markupFontFamily: Menlo, monospace;
 
 // Space & Borders
 $gutter: 50px;
