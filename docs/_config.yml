@@ -1,0 +1,38 @@
+# Meta =======================================================================
+title: Cartfox - A lightweight, powerful wrapper for the Shopify ajax cart API
+description: A lightweight, powerful wrapper for the Shopify ajax cart API
+# Site =======================================================================
+name: Cartfox
+subtitle: Shopify carts on steriods
+github_url: https://github.com/Elkfox/Cartfox
+download_url: https://github.com/Elkfox/Cartfox/archive/master.zip
+# demo_url: https://concrete-theme.myshopify.com
+# Navigation =================================================================
+nav:
+  - title: About
+    url: '#about'
+  - title: Features
+    url: '#features'
+  - title: Getting Started
+    url: '#getting-started'
+  - title: 'Javascript'
+    url: '#javascript'
+  - title: 'Options'
+    url: '#options'
+  - title: 'jQuery Events'
+    url: '#jquery-events'
+  - title: Styles
+    url: '#css'
+
+# Collections ================================================================
+collections:
+  documentation:
+    title: Documentation
+# Build settings =============================================================
+markdown: kramdown
+theme: minima
+gems:
+  - jekyll-feed
+exclude:
+  - Gemfile
+  - Gemfile.lock
