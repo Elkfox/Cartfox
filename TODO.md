@@ -1,9 +1,7 @@
-# TODO
-
-- Static methods.
-  - Allow functions such as addItem, removeItem, etc to be called without creating a new cart object.
-
-- Switch to non class based methods?
-  - Objects and prototypes?
-
-- Write some tests.
+ - Add getting and setting functions
+ - Add cart rendering functionality
+ - Add in other useful elements from existing sites
+ - Add in/resolve existing issues on repositorxy
+ - Setup repository project
+ - Use airb'n'b eslint 6 not 5
+ - Use Babel
