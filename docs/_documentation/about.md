@@ -8,8 +8,9 @@ Cartfox is a lightweight, powerful wrapper for the Shopify AJAX cart API, built 
 
 ### Requirements
 
-  * jQuery >= 1.3
-  * Q
+  * jQuery >= 1.7
+  * [Q](https://github.com/ButsAndCats/Q)
+
 <!--
 .attr - v1
 .data - v1.2.3
