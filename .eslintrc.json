@@ -1,17 +1,9 @@
 {
   "extends": "airbnb-base",
   "env": {
-      "node": false,
-      "jquery": true,
-      "browser": true
-  },
-  "parserOptions": {
-    "sourceType": "script"
-  },
-  "rules": {
-    "no-template-curly-in-string": "warn",
-    "prefer-rest-params": "off",
-    "prefer-template": "off",
-    "object-shorthand": "off"
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
   }
 }

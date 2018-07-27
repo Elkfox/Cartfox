@@ -1,0 +1,15 @@
+{
+  "name": "Cartfox",
+  "version": "3.0.0-alpha",
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "AJAX cart wrapper for Shopify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elkfox/Cartfox.git"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  }
+}
