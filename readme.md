@@ -1,8 +1,7 @@
 ```
 <script>
-  var cart;
-  $(document).ready(function() {
-    cart = new CartFox({{ cart | json }});
+  document.addEventListener("DOMContentLoaded", function(event) {
+    window.cart = new CartFox({{ cart | json }});
   });
 </script>
 ```
