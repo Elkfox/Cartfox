@@ -10,7 +10,6 @@ Focus v1.1
 https://github.com/Elkfox/Focus
 Copyright (c) 2017 Elkfox Co Pty Ltd
 https://elkfox.com
-Project lead: George Butter
 MIT License
 ==============================================================================*/
 var Focus = function(target, config) {
