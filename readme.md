@@ -1,3 +1,10 @@
+# @elkfox/cart v3.0.0-alpha.2
+
+AJAX cart wrapper for [Shopify](https://www.shopify.com)
+
+Made with love by [Elkfox](https://www.elkfox.com)
+
+### Notes
 ```
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {

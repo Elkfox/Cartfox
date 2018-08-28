@@ -1,6 +1,6 @@
 {
-  "name": "Cartfox",
-  "version": "3.0.0-alpha.2",
+  "name": "@elkfox/cart",
+  "version": "3.0.0-alpha.3",
   "license": "SEE LICENSE IN LICENSE",
   "description": "AJAX cart wrapper for Shopify",
   "repository": {
