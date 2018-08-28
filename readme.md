@@ -1,4 +1,4 @@
-# @elkfox/cart v3.0.0-alpha.2
+# @elkfox/cart v3.0.0-alpha.3
 
 AJAX cart wrapper for [Shopify](https://www.shopify.com)
 
