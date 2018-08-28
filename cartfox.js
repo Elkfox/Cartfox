@@ -1,6 +1,4 @@
 const CartFox = function CartFox(configuration) {
-  'use strict';
-
   // Set up our Cartfox instance with the defined configuration
   const config = configuration;
   const cart = config.cart || {};
@@ -53,8 +51,6 @@ const CartFox = function CartFox(configuration) {
 }
 
 CartFox.prototype.buildEventListeners = function buildEventListeners(selectors) {
-  'use strict';
-
   // Try and build event listeners using jQuery
   try {
     jQuery(document).on('click', selectors.addItem, this.addToCart.bind(this));
@@ -72,7 +68,6 @@ CartFox.prototype.buildEventListeners = function buildEventListeners(selectors) 
   Event based Functions
 */
 CartFox.prototype.addToCart = function onClickAddToCartButton(event) {
-  'use strict';
   event.preventDefault();
   const id = jQuery('[name="id"]').val();
   const quantity = Number(jQuery('[name="quantity"]').val());
@@ -96,7 +91,6 @@ CartFox.prototype.addToCart = function onClickAddToCartButton(event) {
 };
 
 CartFox.prototype.quickAdd = function onClickQuickAddButton(event) {
-  'use strict';
   event.preventDefault();
 
   const id = Number(jQuery(event.currentTarget).data(this.getDataAttribute(this.selectors.quickAdd)));
@@ -112,7 +106,6 @@ CartFox.prototype.quickAdd = function onClickQuickAddButton(event) {
 };
 
 CartFox.prototype.removeFromCart = function onClickRemoveButton(event) {
-  'use strict';
   event.preventDefault();
 
   const attribute = this.getDataAttribute(this.selectors.removeItem);
@@ -122,7 +115,6 @@ CartFox.prototype.removeFromCart = function onClickRemoveButton(event) {
 };
 
 CartFox.prototype.decreaseQuantity = function onClickDecreaseQuantityButton(event) {
-  'use strict';
   event.preventDefault();
 
   const attribute = this.getDataAttribute(this.selectors.decreaseQuantity);
@@ -146,7 +138,6 @@ CartFox.prototype.decreaseQuantity = function onClickDecreaseQuantityButton(even
 };
 
 CartFox.prototype.increaseQuantity = function onClickIncreaseQuantityButton(event) {
-  'use strict';
   event.preventDefault();
 
   const attribute = this.getDataAttribute(this.selectors.increaseQuantity);
@@ -180,8 +171,6 @@ CartFox.prototype.increaseQuantity = function onClickIncreaseQuantityButton(even
 // Request a fresh cart from 'cart.js'
 // Then re-render the cart
 CartFox.prototype.getCart = function getCart(config) {
-  'use strict';
-
   const options = config || {};
   const success = options.success || function getCartSuccess(cart) {
     this.updateCartObject(cart);
@@ -202,8 +191,6 @@ CartFox.prototype.getCart = function getCart(config) {
 // Update global this.cart from the returned 'update.js' or 'change.js' API callback
 // Then re-render the cart
 CartFox.prototype.updateCartObject = function updateCartObjectFromNewCart(cart) {
-  'use strict';
-
   this.cart = cart;
   this.renderCart(this.cart);
 }
@@ -212,8 +199,6 @@ CartFox.prototype.updateCartObject = function updateCartObjectFromNewCart(cart) 
 // Trigger a renderCart event and run any onRender functions
 // Can be overwritten from new Cartfox init
 CartFox.prototype.renderCart = function renderCartFromObject() {
-  'use strict';
-
   $(this.selectors.cartItemCount).html(this.cart.item_count);
   jQuery(document).trigger('cartfox:onRender', this.cart);
 
@@ -228,8 +213,6 @@ CartFox.prototype.renderCart = function renderCartFromObject() {
 //  - quantity
 //  - properties
 CartFox.prototype.addItem = function addItem(data, config) {
-  'use strict';
-
   const item = data || {};
   const options = config || {};
 
@@ -263,8 +246,6 @@ CartFox.prototype.addItem = function addItem(data, config) {
 // Remove item by id
 // Accepts an item id and config
 CartFox.prototype.removeItemById = function removeItemById(id, config) {
-  'use strict';
-
   const data = { updates: {} };
   const options = config || {};
   data.updates[id] = 0;
@@ -292,8 +273,6 @@ CartFox.prototype.removeItemById = function removeItemById(id, config) {
 
 // Remove item by line
 CartFox.prototype.removeItemByLine = function removeItemFromCartUsingLineindex(line, config) {
-  'use strict';
-
   const options = config || {};
 
   options.success = options.success || function success(cart) {
@@ -321,7 +300,6 @@ CartFox.prototype.removeItemByLine = function removeItemFromCartUsingLineindex(l
 }
 
 CartFox.prototype.updateItemById = function updateItemById(id, quantity, config) {
-  'use strict';
   const data = { updates: {} };
   const options = config || {};
 
@@ -349,7 +327,6 @@ CartFox.prototype.updateItemById = function updateItemById(id, quantity, config)
 }
 
 CartFox.prototype.updateItemByLine = function updateItemFromCartUsingLineindex(line, quantity, config) {
-  'use strict';
   const options = config || {};
 
   options.success = options.success || function success(cart) {
@@ -377,7 +354,6 @@ CartFox.prototype.updateItemByLine = function updateItemFromCartUsingLineindex(l
 }
 
 CartFox.prototype.clearCart = function clearCart(config) {
-  'use strict';
   const options = config || {};
 
   options.success = options.success || function success(cart) {
@@ -415,7 +391,7 @@ CartFox.prototype.getDataAttribute = function getAttributeFromDataAttributeSelec
 CartFox.prototype.createItems = function createAnIdCentricDataStuctureFromTheCart(cart) {
   const items = {};
 
-  for (let i = 0; i < cart.items.length; i++) {
+  for (var i = 0; i < cart.items.length; i++) {
     items[cart.items[i].id] = {
       line: i+1,
       quantity: cart.items[i].quantity
