@@ -29,7 +29,7 @@ const CartFox = function CartFox(configuration) {
   };
 
   // Create a new queue
-  this.queue = new Q({
+  this.queue = new Queue({
     dataType: 'json',
     method: 'POST',
   });
@@ -405,4 +405,4 @@ CartFox.prototype.createItems = function createAnIdCentricDataStuctureFromTheCar
   End Utility Functions
 */
 
-export {CartFox}
+module.exports = CartFox;

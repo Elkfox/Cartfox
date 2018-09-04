@@ -22,9 +22,13 @@
     "url": "https://github.com/Elkfox/Cartfox.git"
   },
   "version": "3.0.0-alpha.4",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "@elkfox/queue": ">=0.0.7"
+  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0"
-  }
+  },
 }
