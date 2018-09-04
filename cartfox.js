@@ -404,3 +404,5 @@ CartFox.prototype.createItems = function createAnIdCentricDataStuctureFromTheCar
 /*
   End Utility Functions
 */
+
+export {CartFox}

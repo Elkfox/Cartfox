@@ -1,12 +1,27 @@
 {
+  "author": {
+    "name": "Elkfox",
+    "email": "opensource@elkfox.com",
+    "url": "https://elkfox.github.io"
+  },
+  "browser": "cartfox.js",
+  "bugs": {
+    "url": "https://github.com/Elkfox/Cartfox/issues"
+  },
+  "description": "A lightweight, powerful wrapper for the Shopify AJAX cart API, built by Elkfox.",
+  "homepage": "https://elkfox.github.io/Cartfox",
+  "keywords": [
+    "Ajax",
+    "Cart",
+    "Shopify"
+  ],
+  "license": "MIT",
   "name": "@elkfox/cart",
-  "version": "3.0.0-alpha.3",
-  "license": "SEE LICENSE IN LICENSE",
-  "description": "AJAX cart wrapper for Shopify",
   "repository": {
     "type": "git",
     "url": "https://github.com/Elkfox/Cartfox.git"
   },
+  "version": "3.0.0-alpha.4",
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
