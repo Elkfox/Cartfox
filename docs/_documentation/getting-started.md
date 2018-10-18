@@ -4,23 +4,23 @@ handle: "getting-started"
 category: "getting started"
 ---
 
-Grab `cartfox.js` or `cartfox.min.js` from [the repository](https://github.com/Elkfox/Cartfox).
+Grab `Cart.js` or `Cart.min.js` from [the repository](https://github.com/Elkfox/Cart).
 
 Include the following in your `theme.liquid`
 
 {% highlight liquid %}
-{% raw %}{{ 'cartfox.min.js' | asset_url | script_tag }}{% endraw %}
+{% raw %}{{ 'Cart.min.js' | asset_url | script_tag }}{% endraw %}
 {% endhighlight %}
 
 Optionally, include the styles located in the css directory of the repository.
 
-Initialize a new Cartfox instance:
+Initialize a new Cart instance:
 
 {% highlight html %}
-<script>
+<script type="text/javascript">
   var cart;
   $(document).ready(function() {
-    cart = new CartFox({% raw %}{{ cart | json }}{% endraw %});
+    cart = new Cart({% raw %}{{ cart | json }}{% endraw %});
   });
 </script>
 {% endhighlight %}

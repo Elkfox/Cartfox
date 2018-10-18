@@ -1,4 +1,4 @@
-const CartFox = function CartFox(configuration) {
+const Cart = function Cart(configuration) {
   // Set up our Cartfox instance with the defined configuration
   const config = configuration;
   const cart = config.cart || {};
@@ -46,11 +46,11 @@ const CartFox = function CartFox(configuration) {
 
   // Build the event listeners from the selectors
   this.buildEventListeners(this.selectors);
-  jQuery(document).trigger('cartfox:ready', [this]);
+  jQuery(document).trigger('cart:ready', [this]);
   return this;
 }
 
-CartFox.prototype.buildEventListeners = function buildEventListeners(selectors) {
+Cart.prototype.buildEventListeners = function buildEventListeners(selectors) {
   // Try and build event listeners using jQuery
   try {
     jQuery(document).on('click', selectors.addItem, this.addToCart.bind(this));
@@ -67,7 +67,7 @@ CartFox.prototype.buildEventListeners = function buildEventListeners(selectors) 
 /*
   Event based Functions
 */
-CartFox.prototype.addToCart = function onClickAddToCartButton(event) {
+Cart.prototype.addToCart = function onClickAddToCartButton(event) {
   event.preventDefault();
   const id = jQuery('[name="id"]').val();
   const quantity = Number(jQuery('[name="quantity"]').val());
@@ -90,7 +90,7 @@ CartFox.prototype.addToCart = function onClickAddToCartButton(event) {
   this.addItem(data);
 };
 
-CartFox.prototype.quickAdd = function onClickQuickAddButton(event) {
+Cart.prototype.quickAdd = function onClickQuickAddButton(event) {
   event.preventDefault();
 
   const id = Number(jQuery(event.currentTarget).data(this.getDataAttribute(this.selectors.quickAdd)));
@@ -105,7 +105,7 @@ CartFox.prototype.quickAdd = function onClickQuickAddButton(event) {
   this.addItem(data);
 };
 
-CartFox.prototype.removeFromCart = function onClickRemoveButton(event) {
+Cart.prototype.removeFromCart = function onClickRemoveButton(event) {
   event.preventDefault();
 
   const attribute = this.getDataAttribute(this.selectors.removeItem);
@@ -114,7 +114,7 @@ CartFox.prototype.removeFromCart = function onClickRemoveButton(event) {
   this.removeItemByLine(line);
 };
 
-CartFox.prototype.decreaseQuantity = function onClickDecreaseQuantityButton(event) {
+Cart.prototype.decreaseQuantity = function onClickDecreaseQuantityButton(event) {
   event.preventDefault();
 
   const attribute = this.getDataAttribute(this.selectors.decreaseQuantity);
@@ -124,20 +124,21 @@ CartFox.prototype.decreaseQuantity = function onClickDecreaseQuantityButton(even
   const quantity = this.cart.items[index].quantity - 1;
 
   const success = function success(cart) {
-    return jQuery(document).trigger('cartfox:itemQuantityDecreased', [cart]);
+    return jQuery(document).trigger('cart:itemQuantityDecreased', [cart]);
   }
   const error = function error(error) {
-    return jQuery(document).trigger('cartfox:cannotDecreaseItemQuantity', [error]);
+    return jQuery(document).trigger('cart:cannotDecreaseItemQuantity', [error]);
   }
   const options = {
     success: success,
     error: error,
   }
 
+  jQuery(document).trigger('cart:beforeItemQuantityDecreased');
   this.updateItemByLine(line, quantity, options);
 };
 
-CartFox.prototype.increaseQuantity = function onClickIncreaseQuantityButton(event) {
+Cart.prototype.increaseQuantity = function onClickIncreaseQuantityButton(event) {
   event.preventDefault();
 
   const attribute = this.getDataAttribute(this.selectors.increaseQuantity);
@@ -147,16 +148,17 @@ CartFox.prototype.increaseQuantity = function onClickIncreaseQuantityButton(even
   const quantity = this.cart.items[index].quantity + 1;
 
   const success = function success(cart) {
-    return jQuery(document).trigger('cartfox:itemQuantityIncreased', [cart]);
+    return jQuery(document).trigger('cart:itemQuantityIncreased', [cart]);
   }
   const error = function error(error) {
-    return jQuery(document).trigger('cartfox:cannotIncreaseItemQuantity', [error]);
+    return jQuery(document).trigger('cart:cannotIncreaseItemQuantity', [error]);
   }
   const options = {
     success: success,
     error: error,
   }
 
+  jQuery(document).trigger('cart:beforeItemQuantityIncreased');
   this.updateItemByLine(line, quantity, options);
 };
 /*
@@ -170,7 +172,7 @@ CartFox.prototype.increaseQuantity = function onClickIncreaseQuantityButton(even
 // Get a fresh cart back from the API
 // Request a fresh cart from 'cart.js'
 // Then re-render the cart
-CartFox.prototype.getCart = function getCart(config) {
+Cart.prototype.getCart = function getCart(config) {
   const options = config || {};
   const success = options.success || function getCartSuccess(cart) {
     this.updateCartObject(cart);
@@ -190,7 +192,7 @@ CartFox.prototype.getCart = function getCart(config) {
 // Updating cart object
 // Update global this.cart from the returned 'update.js' or 'change.js' API callback
 // Then re-render the cart
-CartFox.prototype.updateCartObject = function updateCartObjectFromNewCart(cart) {
+Cart.prototype.updateCartObject = function updateCartObjectFromNewCart(cart) {
   this.cart = cart;
   this.renderCart(this.cart);
 }
@@ -198,9 +200,9 @@ CartFox.prototype.updateCartObject = function updateCartObjectFromNewCart(cart) 
 // Default cart rendering
 // Trigger a renderCart event and run any onRender functions
 // Can be overwritten from new Cartfox init
-CartFox.prototype.renderCart = function renderCartFromObject() {
+Cart.prototype.renderCart = function renderCartFromObject() {
   $(this.selectors.cartItemCount).html(this.cart.item_count);
-  jQuery(document).trigger('cartfox:onRender', this.cart);
+  jQuery(document).trigger('cart:render', this.cart);
 
   if (this.onRender && typeof this.onRender === 'function') {
     this.onRender(this.cart);
@@ -212,7 +214,7 @@ CartFox.prototype.renderCart = function renderCartFromObject() {
 //  - id (required)
 //  - quantity
 //  - properties
-CartFox.prototype.addItem = function addItem(data, config) {
+Cart.prototype.addItem = function addItem(data, config) {
   const item = data || {};
   const options = config || {};
 
@@ -224,10 +226,10 @@ CartFox.prototype.addItem = function addItem(data, config) {
 
   options.success = options.success || function success(lineItem) {
     this.getCart();
-    return jQuery(document).trigger('cartfox:itemAdded', [lineItem]);
+    return jQuery(document).trigger('cart:itemAdded', [lineItem]);
   }.bind(this);
   options.error = options.error || function error(error) {
-    return jQuery(document).trigger('cartfox:cannotAddToCart', [error]);
+    return jQuery(document).trigger('cart:cannotAddToCart', [error]);
   }.bind(this);
 
   const request = {
@@ -238,24 +240,24 @@ CartFox.prototype.addItem = function addItem(data, config) {
   };
 
   // Add the request to the queue
-  jQuery(document).trigger('cartfox:beforeItemAdded');
+  jQuery(document).trigger('cart:beforeItemAdded');
   this.queue.add(request);
   return this;
 };
 
 // Remove item by id
 // Accepts an item id and config
-CartFox.prototype.removeItemById = function removeItemById(id, config) {
+Cart.prototype.removeItemById = function removeItemById(id, config) {
   const data = { updates: {} };
   const options = config || {};
   data.updates[id] = 0;
 
   options.success = options.success || function success(cart) {
     this.updateCartObject(cart);
-    return jQuery(document).trigger('cartfox:itemRemoved', [cart]);
+    return jQuery(document).trigger('cart:itemRemoved', [cart]);
   }.bind(this);
   options.error = options.error || function error(error) {
-    return jQuery(document).trigger('cartfox:cannotRemoveFromCart', [error]);
+    return jQuery(document).trigger('cart:cannotRemoveItemFromCart', [error]);
   };
 
   const request = {
@@ -266,21 +268,22 @@ CartFox.prototype.removeItemById = function removeItemById(id, config) {
   }
 
   // Add the request to the queue
-  jQuery(document).trigger('cartfox:beforeItemRemoved');
+  jQuery(document).trigger('cart:beforeItemRemoved');
   this.queue.add(request);
   return this;
 }
 
 // Remove item by line
-CartFox.prototype.removeItemByLine = function removeItemFromCartUsingLineindex(line, config) {
+// Accepts a line index and config
+Cart.prototype.removeItemByLine = function removeItemFromCartUsingLineindex(line, config) {
   const options = config || {};
 
   options.success = options.success || function success(cart) {
     this.updateCartObject(cart)
-    return jQuery(document).trigger('cartfox:itemRemoved', [cart]);
+    return jQuery(document).trigger('cart:itemRemoved', [cart]);
   }.bind(this);
   options.error = options.error || function error(error) {
-    return jQuery(document).trigger('cartfox:cannotRemoveFromCart', [error]);
+    return jQuery(document).trigger('cart:cannotRemoveItemFromCart', [error]);
   };
 
   const request = {
@@ -294,12 +297,12 @@ CartFox.prototype.removeItemByLine = function removeItemFromCartUsingLineindex(l
   };
 
   // Add the request to the queue
-  jQuery(document).trigger('cartfox:beforeItemRemoved');
+  jQuery(document).trigger('cart:beforeItemRemoved');
   this.queue.add(request);
   return this;
 }
 
-CartFox.prototype.updateItemById = function updateItemById(id, quantity, config) {
+Cart.prototype.updateItemById = function updateItemById(id, quantity, config) {
   const data = { updates: {} };
   const options = config || {};
 
@@ -307,10 +310,10 @@ CartFox.prototype.updateItemById = function updateItemById(id, quantity, config)
 
   options.success = options.success || function success(cart) {
     this.updateCartObject(cart)
-    return jQuery(document).trigger('cartfox:itemUpdated', [cart]);
+    return jQuery(document).trigger('cart:itemUpdated', [cart]);
   }.bind(this);
   options.error = options.error || function error(error) {
-    return jQuery(document).trigger('cartfox:cannotUpdateItem', [error]);
+    return jQuery(document).trigger('cart:cannotUpdateItem', [error]);
   };
 
   const request = {
@@ -321,20 +324,20 @@ CartFox.prototype.updateItemById = function updateItemById(id, quantity, config)
   }
 
   // Add the request to the queue
-  jQuery(document).trigger('cartfox:beforeItemUpdated');
+  jQuery(document).trigger('cart:beforeItemUpdated');
   this.queue.add(request);
   return this;
 }
 
-CartFox.prototype.updateItemByLine = function updateItemFromCartUsingLineindex(line, quantity, config) {
+Cart.prototype.updateItemByLine = function updateItemFromCartUsingLineindex(line, quantity, config) {
   const options = config || {};
 
   options.success = options.success || function success(cart) {
     this.updateCartObject(cart)
-    return jQuery(document).trigger('cartfox:itemUpdated', [cart]);
+    return jQuery(document).trigger('cart:itemUpdated', [cart]);
   }.bind(this);
   options.error = options.error || function error(error) {
-    return jQuery(document).trigger('cartfox:cannotUpdateItem', [error]);
+    return jQuery(document).trigger('cart:cannotUpdateItem', [error]);
   };
 
   const request = {
@@ -348,20 +351,20 @@ CartFox.prototype.updateItemByLine = function updateItemFromCartUsingLineindex(l
   };
 
   // Add the request to the queue
-  jQuery(document).trigger('cartfox:beforeItemUpdated');
+  jQuery(document).trigger('cart:beforeItemUpdated');
   this.queue.add(request);
   return this;
 }
 
-CartFox.prototype.clearCart = function clearCart(config) {
+Cart.prototype.clearCart = function clearCart(config) {
   const options = config || {};
 
   options.success = options.success || function success(cart) {
     this.updateCartObject(cart);
-    return jQuery(document).trigger('cartfox:cartCleared', [cart]);
+    return jQuery(document).trigger('cart:cartCleared', [cart]);
   }.bind(this);
   options.error = options.error || function error(error) {
-    return jQuery(document).trigger('cartfox:cannotClearCart', [error]);
+    return jQuery(document).trigger('cart:cannotClearCart', [error]);
   };
 
   const request = {
@@ -371,7 +374,7 @@ CartFox.prototype.clearCart = function clearCart(config) {
   };
 
   // Add the request to the queue
-  jQuery(document).trigger('cartfox:beforeCartCleared');
+  jQuery(document).trigger('cart:beforeCartCleared');
   this.queue.add(request);
   return this;
 }
@@ -384,11 +387,11 @@ CartFox.prototype.clearCart = function clearCart(config) {
   Utility Functions
 */
 
-CartFox.prototype.getDataAttribute = function getAttributeFromDataAttributeSelector(selector) {
+Cart.prototype.getDataAttribute = function getAttributeFromDataAttributeSelector(selector) {
   return selector.replace('[data-', '').replace(']', '');
 };
 
-CartFox.prototype.createItems = function createAnIdCentricDataStuctureFromTheCart(cart) {
+Cart.prototype.createItems = function createAnIdCentricDataStuctureFromTheCart(cart) {
   const items = {};
 
   for (var i = 0; i < cart.items.length; i++) {
@@ -405,4 +408,4 @@ CartFox.prototype.createItems = function createAnIdCentricDataStuctureFromTheCar
   End Utility Functions
 */
 
-module.exports = CartFox;
+module.exports = Cart;

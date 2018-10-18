@@ -4,7 +4,7 @@ handle: "about"
 category: "about"
 ---
 
-Cartfox is a lightweight, powerful wrapper for the Shopify AJAX cart API, built by [Elkfox](https://elkfox.com).
+Cart is a lightweight, powerful wrapper for the Shopify AJAX cart API, built by [Elkfox](https://elkfox.com).
 
 ### Requirements
 

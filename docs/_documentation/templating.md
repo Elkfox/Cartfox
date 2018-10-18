@@ -4,13 +4,13 @@ handle: "templating"
 category: "templating"
 ---
 
-In order to keep Cartfox as versatile as possible, we haven't included any cart rendering by default. However, we have made it painlessly simple to add rendering to your projects using only a few lines of code.
+In order to keep Cart as versatile as possible, we haven't included any cart rendering by default. However, we have made it painlessly simple to add rendering to your projects using only a few lines of code.
 
-A rendering function can be defined at the time of the Cartfox initialization:
+A rendering function can be defined at the time of the Cart initialization:
 
 {% highlight html %}
-<script>
-  cart = new CartFox({% raw %}{{ cart | json }}{% endraw %}, {
+<script type="text/javascript">
+  cart = new Cart({% raw %}{{ cart | json }}{% endraw %}, {
     render: function(event, cart) {
       // Render anything you want here
     }
@@ -18,11 +18,11 @@ A rendering function can be defined at the time of the Cartfox initialization:
 </script>
 {% endhighlight %}
 
-Additionally, rendering functions can be called using the jQuery event `cartfox:render` which is fired eevery time the cart is updated.
+Additionally, rendering functions can be called using the jQuery event `Cart:render` which is fired eevery time the cart is updated.
 
 {% highlight html %}
-<script>
-  $(document).on('cartfox:render', function(event, cart) {
+<script type="text/javascript">
+  $(document).on('Cart:render', function(event, cart) {
     // Render anything extra you want here
   });
 </script>
@@ -35,16 +35,16 @@ Here are a few of our favorite implementations using popular templating librarie
 We have provided this Handlebars example in the `templating/` folder. This implementation has been pulled from our in-house framework [Concrete](https://elkfox.github.io/Concrete/).
 
 {% highlight html %}
-<script data-cartfox-template type="text/x-handlebars-template">
+<script data-Cart-template type="text/x-handlebars-template">
 
 </script>
 
-<script>
-  $(document).on('cartfox:render', function(event, cart) {
-    var source = $('[data-cartfox-template]').html();
+<script type="text/javascript">
+  $(document).on('Cart:render', function(event, cart) {
+    var source = $('[data-Cart-template]').html();
     var template = Handlebars.compile(source);
     var html = template(cart);
-    $('[data-cartfox-container]').html(html);
+    $('[data-Cart-container]').html(html);
   });
 </script>
 {% endhighlight %}

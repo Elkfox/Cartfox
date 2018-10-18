@@ -20,7 +20,7 @@ Say for example when a user scrolled a specific part of the page.
   </div>
 
   <h2 id="scrollTrigger">Scroll to here I dare you</h2>
-  <script>
+  <script type="text/javascript">
     // In this scenario we need to initialise our Focus element with JS
     var scrollPopup = new Focus('#scrollPopup');
 
