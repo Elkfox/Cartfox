@@ -27,7 +27,7 @@ MIT License
   Additional items below are prototypes of, and extend, this function
 */
 const Cart = function Cart(configuration) {
-  // Set up our Cart instance with the pre-defined configuration
+  // Set up our Cart instance with the defined configuration
   const config = configuration;
   const cart = config.cart || {};
   const selectors = config.selectors || {};
