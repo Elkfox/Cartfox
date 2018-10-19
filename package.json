@@ -4,11 +4,11 @@
     "email": "opensource@elkfox.com",
     "url": "https://elkfox.github.io"
   },
-  "browser": "cartfox.js",
+  "browser": "cart.js",
   "bugs": {
     "url": "https://github.com/Elkfox/Cartfox/issues"
   },
-  "description": "A lightweight, powerful wrapper for the Shopify AJAX cart API, built by Elkfox.",
+  "description": "A lightweight, powerful wrapper for the Shopify AJAX cart API.",
   "homepage": "https://elkfox.github.io/Cartfox",
   "keywords": [
     "Ajax",
@@ -21,14 +21,18 @@
     "type": "git",
     "url": "https://github.com/Elkfox/Cartfox.git"
   },
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-beta.1",
   "dependencies": {
-    "jquery": "^3.2.1",
-    "@elkfox/queue": ">=0.0.7"
+    "@elkfox/queue": ">=0.0.7",
+    "eslint-config-airbnb": "^17.1.0",
+    "jquery": "^3.2.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0"
+  },
+  "scripts": {
+    "lint": "eslint cart.js"
   }
 }
