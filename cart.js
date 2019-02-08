@@ -329,7 +329,7 @@ Cart.prototype.updateCartObject = function updateCartObjectFromNewCart(cart) {
 */
 Cart.prototype.renderCart = function renderCartFromObject() {
   // Update the item count selector with the current cart item_count
-  $(this.selectors.cartItemCount).html(this.cart.item_count);
+  jQuery(this.selectors.cartItemCount).html(this.cart.item_count);
 
   // Trigger a cart:render event and pass through the current cart
   jQuery(document).trigger('cart:render', this.cart);
